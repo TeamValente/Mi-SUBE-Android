@@ -1,8 +1,11 @@
-package xyz.marianomolina.misube;
+package xyz.marianomolina.misube.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import xyz.marianomolina.misube.fragments.MapViewFragment;
+import xyz.marianomolina.misube.fragments.SaldoViewFragment;
 
 
 /**
@@ -24,8 +27,6 @@ public class TabPageAdapter extends FragmentStatePagerAdapter {
                 return new SaldoViewFragment();
             case 1:
                 return new MapViewFragment();
-            case 2:
-                return new ConfigViewFragment();
             default:
                 return null;
         }

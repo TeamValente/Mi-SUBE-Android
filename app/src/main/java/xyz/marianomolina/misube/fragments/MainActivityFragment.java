@@ -1,4 +1,4 @@
-package xyz.marianomolina.misube;
+package xyz.marianomolina.misube.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import xyz.marianomolina.misube.R;
+import xyz.marianomolina.misube.adapters.TabPageAdapter;
 
 /**
  * Created by Mariano Molina on 17/2/16.
@@ -31,8 +34,9 @@ public class MainActivityFragment extends Fragment {
         // config TabLayout
         TabLayout mTabLayout = (TabLayout) getActivity().findViewById(R.id.masterTab);
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_saldo));
+        //mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_mapa));
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_config));
+        //mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager mViewPager = (ViewPager) getActivity().findViewById(R.id.masterViewPager);
@@ -58,6 +62,12 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-        //mTabLayout.setupWithViewPager(mViewPager);
+        TabLayout.Tab tabMiCuenta = mTabLayout.getTabAt(0);
+        assert tabMiCuenta != null;
+        tabMiCuenta.setIcon(R.drawable.selector_credit_card);
+
+        TabLayout.Tab tabMap = mTabLayout.getTabAt(1);
+        assert tabMap != null;
+        tabMap.setIcon(R.drawable.selector_map);
     }
 }
