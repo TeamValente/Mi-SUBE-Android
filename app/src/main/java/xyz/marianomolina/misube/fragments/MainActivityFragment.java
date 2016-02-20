@@ -34,9 +34,7 @@ public class MainActivityFragment extends Fragment {
         // config TabLayout
         TabLayout mTabLayout = (TabLayout) getActivity().findViewById(R.id.masterTab);
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_saldo));
-        //mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_mapa));
-        //mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager mViewPager = (ViewPager) getActivity().findViewById(R.id.masterViewPager);

@@ -6,12 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".fragments.MovimientosActivityFragment"
-    tools:showIn="@layout/activity_movimientos">
+    tools:context=".fragments.ConfigActivityFragment"
+    tools:showIn="@layout/activity_config">
 
-<!--    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/movimientos_list_view"/>-->
 
 </RelativeLayout>

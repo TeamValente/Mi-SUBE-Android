@@ -27,6 +27,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="xyz.marianomolina.misube.MainActivity" />
         </activity>
+        <activity
+            android:name=".ConfigActivity"
+            android:label="@string/title_activity_config"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="xyz.marianomolina.misube.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
