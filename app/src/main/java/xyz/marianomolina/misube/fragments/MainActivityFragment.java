@@ -2,6 +2,7 @@ package xyz.marianomolina.misube.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -31,6 +32,10 @@ public class MainActivityFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Find button
+        final FloatingActionButton btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
+        btn_find_my_location.hide();
+
         // config TabLayout
         TabLayout mTabLayout = (TabLayout) getActivity().findViewById(R.id.masterTab);
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_saldo));
@@ -46,6 +51,14 @@ public class MainActivityFragment extends Fragment {
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        btn_find_my_location.hide();
+                        break;
+                    case 1:
+                        btn_find_my_location.show();
+                        break;
+                }
                 mViewPager.setCurrentItem(tab.getPosition());
             }
 
