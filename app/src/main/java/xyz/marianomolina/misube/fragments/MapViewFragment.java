@@ -2,7 +2,11 @@ package xyz.marianomolina.misube.fragments;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,9 +48,12 @@ import xyz.marianomolina.misube.R;
 public class MapViewFragment extends Fragment {
     // TAG
     private static final String LOG_TAG = MapViewFragment.class.getSimpleName();
+
+    public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 167;
+
     // Permission Constants
     private static final int REQUEST_SHOWMAP = 0;
-    private static final String[] PERMISSION_SHOWMAP = new String[] {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION" };
+    private static final String[] PERMISSION_SHOWMAP = new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
     // propiedades
     private GoogleMap map;
     private SupportMapFragment supportMapFragment;
@@ -63,14 +72,17 @@ public class MapViewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
+        if (checkGooglePlayServices()) {
 
-        FragmentManager fm = getChildFragmentManager();
-        supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
+            btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
 
-        if (supportMapFragment == null) {
-            supportMapFragment = SupportMapFragment.newInstance();
-            fm.beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+            FragmentManager fm = getChildFragmentManager();
+            supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
+
+            if (supportMapFragment == null) {
+                supportMapFragment = SupportMapFragment.newInstance();
+                fm.beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+            }
         }
     }
 
@@ -81,16 +93,20 @@ public class MapViewFragment extends Fragment {
         showMapWithCheck();
     }
 
-    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE })
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showMap() {
 
         if (map == null) supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
+            public void onMapReady(final GoogleMap googleMap) {
                 map = googleMap;
 
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                // Ignorar el error que esta marcando, los permisos ya estan implementados
                 map.setMyLocationEnabled(true);
+                map.getUiSettings().setMyLocationButtonEnabled(false);
+
                 // Centramos el mapa en BUENOS AIRES
                 LatLng BUE = new LatLng(-34.6160275, -58.4333203);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(BUE, 13));
@@ -98,11 +114,35 @@ public class MapViewFragment extends Fragment {
                 btn_find_my_location.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), "Click button", Toast.LENGTH_LONG).show();
+                        // GET MyLocation
+                        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                        Criteria criteria = new Criteria();
+                        String provider = service.getBestProvider(criteria, false);
+                        // Ignorar el error que esta marcando, los permisos ya estan implementados
+                        Location location = service.getLastKnownLocation(provider);
+                        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                        //Toast.makeText(getContext(), "LOCATION DATA: " + userLocation, Toast.LENGTH_LONG).show();
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
                     }
                 });
             }
         });
+    }
+
+
+    /*
+    * Google Play API
+    * */
+    private boolean checkGooglePlayServices() {
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int result = api.isGooglePlayServicesAvailable(getContext());
+        if (result != ConnectionResult.SUCCESS) {
+           if (api.isUserResolvableError(result)) {
+               api.getErrorDialog(getActivity(), result, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+           }
+            return false;
+        }
+        return true;
     }
 
 
