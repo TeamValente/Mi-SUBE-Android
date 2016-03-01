@@ -21,10 +21,6 @@ import xyz.marianomolina.misube.adapters.TabPageAdapter;
  */
 public class MainActivity extends AppCompatActivity {
 
-    /*
-    * TODO: Hay que implementar el permission dispacher para controlar los permisos de la app. Ahora estan dentro del MapViewFragment.java
-    * */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /*
+        * Set Icons for tabs
+        * */
         TabLayout.Tab tabMiCuenta = mTabLayout.getTabAt(0);
         assert tabMiCuenta != null;
         tabMiCuenta.setIcon(R.drawable.selector_credit_card);
