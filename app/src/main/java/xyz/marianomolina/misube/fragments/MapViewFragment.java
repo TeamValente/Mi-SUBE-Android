@@ -144,8 +144,7 @@ public class MapViewFragment extends Fragment {
         }
         return true;
     }
-
-
+    
     /*
     * Permisions
     * */
