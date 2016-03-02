@@ -1,6 +1,10 @@
 package xyz.marianomolina.misube.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import xyz.marianomolina.misube.utils.EstadoNegocio;
 
@@ -9,120 +13,256 @@ import xyz.marianomolina.misube.utils.EstadoNegocio;
  */
 public class PuntoCarga {
 
-    private int idPunto;
+    private int id;
     private String address;
     private double latitude;
     private double longitude;
     private String type;
-    private int icon;
+    private String icon;
     private int cost;
-    private int hourOpen;
-    private int hourClose;
+    private int hopen;
+    private int hclose;
     private int flagSeller;
     private int flagInvalid;
-    private int idType;
+    private String distance;
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public int getIdPunto() {
-        return idPunto;
+    /**
+     *
+     * @return
+     * The id
+     */
+    public int getId() {
+        return id;
     }
 
+    /**
+     *
+     * @param id
+     * The id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     *
+     * @return
+     * The address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     *
+     * @param address
+     * The address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     *
+     * @return
+     * The latitude
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     *
+     * @param latitude
+     * The latitude
+     */
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    /**
+     *
+     * @return
+     * The longitude
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     *
+     * @param longitude
+     * The longitude
+     */
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    /**
+     *
+     * @return
+     * The type
+     */
     public String getType() {
         return type;
     }
 
-    public int getIcon() {
+    /**
+     *
+     * @param type
+     * The type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     *
+     * @return
+     * The icon
+     */
+    public String getIcon() {
         return icon;
     }
 
+    /**
+     *
+     * @param icon
+     * The icon
+     */
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    /**
+     *
+     * @return
+     * The cost
+     */
     public int getCost() {
         return cost;
     }
 
-    public int getHourOpen() {
-        return hourOpen;
+    /**
+     *
+     * @param cost
+     * The cost
+     */
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
-    public int getHourClose() {
-        return hourClose;
+    /**
+     *
+     * @return
+     * The hopen
+     */
+    public int getHopen() {
+        return hopen;
     }
 
+    /**
+     *
+     * @param hopen
+     * The hopen
+     */
+    public void setHopen(int hopen) {
+        this.hopen = hopen;
+    }
+
+    /**
+     *
+     * @return
+     * The hclose
+     */
+    public int getHclose() {
+        return hclose;
+    }
+
+    /**
+     *
+     * @param hclose
+     * The hclose
+     */
+    public void setHclose(int hclose) {
+        this.hclose = hclose;
+    }
+
+    /**
+     *
+     * @return
+     * The flagSeller
+     */
     public int getFlagSeller() {
         return flagSeller;
     }
 
+    /**
+     *
+     * @param flagSeller
+     * The flag_seller
+     */
+    public void setFlagSeller(int flagSeller) {
+        this.flagSeller = flagSeller;
+    }
+
+    /**
+     *
+     * @return
+     * The flagInvalid
+     */
     public int getFlagInvalid() {
         return flagInvalid;
     }
 
-    public int getIdType() {
-        return idType;
-    }
-
-
-    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller) {
-        this.idPunto = idPunto;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.type = type;
-        this.icon = icon;
-        this.cost = cost;
-        this.hourOpen = hourOpen;
-        this.hourClose = hourClose;
-        this.flagSeller = flagSeller;
-    }
-
-    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int flagInvalid) {
-        this.idPunto = idPunto;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.type = type;
-        this.icon = icon;
-        this.cost = cost;
-        this.hourOpen = hourOpen;
-        this.hourClose = hourClose;
-        this.flagSeller = flagSeller;
+    /**
+     *
+     * @param flagInvalid
+     * The flag_invalid
+     */
+    public void setFlagInvalid(int flagInvalid) {
         this.flagInvalid = flagInvalid;
     }
 
-    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int idType) {
-        this.idPunto = idPunto;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.type = type;
-        this.icon = icon;
-        this.cost = cost;
-        this.idType = idType;
-        this.hourOpen = hourOpen;
-        this.hourClose = hourClose;
-        this.flagSeller = flagSeller;
+    /**
+     *
+     * @return
+     * The distance
+     */
+    public String getDistance() {
+        return distance;
+    }
+
+    /**
+     *
+     * @param distance
+     * The distance
+     */
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
     public EstadoNegocio estaAbierto() {
         //Get Current Date
-        Date currentDate = new Date();
+        Date date = new Date();   // given date
+        Calendar calendar = GregorianCalendar.getInstance();
 
-        if (this.hourClose + this.hourOpen == 0) {
+        if (this.getHclose() + this.getHopen() == 0) {
             //Sin horario determinado devuelvo false
             return EstadoNegocio.Indeterminado;
         }
-        if (currentDate.getTime() >= this.hourOpen && currentDate.getTime() < this.hourClose) {
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= this.getHopen() &&calendar.get(Calendar.HOUR_OF_DAY) < this.getHclose()) {
             return EstadoNegocio.Abierto;
-        } else if (this.hourOpen >= this.hourClose) {
+        } else if (this.getHopen() >= this.getHclose()) {
             return EstadoNegocio.Abierto;
         } else {
             return EstadoNegocio.Cerrado;
@@ -135,9 +275,9 @@ public class PuntoCarga {
     }
 
     public String getHorarioDeAtencion() {
-        if (this.hourClose + this.hourOpen != 0) {
-            String apertura = this.hourOpen + ":00";
-            String cierre = this.hourClose + ":00";
+        if (this.getHclose() + this.getHopen() != 0) {
+            String apertura = this.getHopen() + ":00";
+            String cierre = this.getHclose() + ":00";
             return  apertura + " - " + cierre + " HS";
         } else {
             //En caso de que no tenga horario cargado muestro solo el tipo
@@ -146,12 +286,9 @@ public class PuntoCarga {
     }
 
     public boolean vendeSube() {
-        return this.flagSeller > 0;
+        return this.getFlagSeller() > 0;
     }
 
-    public boolean cobraPorCargar() {
-        return this.cost > 0;
-
-    }
+    public boolean cobraPorCargar() {return this.getCost() > 0;}
 
 }
