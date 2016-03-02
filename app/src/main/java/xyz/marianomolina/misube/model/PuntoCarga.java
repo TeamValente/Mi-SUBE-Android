@@ -70,19 +70,6 @@ public class PuntoCarga {
         return idType;
     }
 
-    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int flagInvalid) {
-        this.idPunto = idPunto;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.type = type;
-        this.icon = icon;
-        this.cost = cost;
-        this.hourOpen = hourOpen;
-        this.hourClose = hourClose;
-        this.flagSeller = flagSeller;
-        this.flagInvalid = flagInvalid;
-    }
 
     public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller) {
         this.idPunto = idPunto;
@@ -95,6 +82,20 @@ public class PuntoCarga {
         this.hourOpen = hourOpen;
         this.hourClose = hourClose;
         this.flagSeller = flagSeller;
+    }
+
+    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int flagInvalid) {
+        this.idPunto = idPunto;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.type = type;
+        this.icon = icon;
+        this.cost = cost;
+        this.hourOpen = hourOpen;
+        this.hourClose = hourClose;
+        this.flagSeller = flagSeller;
+        this.flagInvalid = flagInvalid;
     }
 
     public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int idType) {
