@@ -4,14 +4,11 @@ package xyz.marianomolina.misube.model;
  * Created by hernancoppola on 29/2/16.
  */
 public class Distancia {
-
     private Double valorNumerico;
     private String unidad;
     private String valorString;
 
-
-    public Distancia(Double valorNum, String valorStr, String unit)
-    {
+    public Distancia(Double valorNum, String valorStr, String unit) {
         this.setValorNumerico(valorNum);
         this.setValorString(valorStr);
         this.setUnidad(unit);

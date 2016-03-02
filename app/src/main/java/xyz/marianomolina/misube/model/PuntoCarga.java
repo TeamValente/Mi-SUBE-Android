@@ -1,5 +1,7 @@
 package xyz.marianomolina.misube.model;
 
+import java.util.Date;
+
 import xyz.marianomolina.misube.utils.EstadoNegocio;
 
 /**
@@ -8,11 +10,11 @@ import xyz.marianomolina.misube.utils.EstadoNegocio;
 public class PuntoCarga {
 
     private int idPunto;
-    private string address;
+    private String address;
     private double latitude;
     private double longitude;
-    private string type;
-    private string icon;
+    private String type;
+    private int icon;
     private int cost;
     private int hourOpen;
     private int hourClose;
@@ -24,7 +26,7 @@ public class PuntoCarga {
         return idPunto;
     }
 
-    public string getAddress() {
+    public String getAddress() {
         return address;
     }
 
@@ -36,11 +38,11 @@ public class PuntoCarga {
         return longitude;
     }
 
-    public string getType() {
+    public String getType() {
         return type;
     }
 
-    public string getIcon() {
+    public int getIcon() {
         return icon;
     }
 
@@ -68,8 +70,7 @@ public class PuntoCarga {
         return idType;
     }
 
-    public PuntoCarga(int idPunto,string address,double latitude,double longitude,string type,string icon,int cost,int hourOpen,int hourClose,int flagSeller,int flagInvalid)
-    {
+    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int flagInvalid) {
         this.idPunto = idPunto;
         this.address = address;
         this.latitude = latitude;
@@ -83,9 +84,7 @@ public class PuntoCarga {
         this.flagInvalid = flagInvalid;
     }
 
-    public PuntoCarga(int idPunto,string address,double latitude,double longitude,string type,string icon,int cost,int hourOpen,int hourClose,int flagSeller)
-    {
-
+    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller) {
         this.idPunto = idPunto;
         this.address = address;
         this.latitude = latitude;
@@ -96,12 +95,9 @@ public class PuntoCarga {
         this.hourOpen = hourOpen;
         this.hourClose = hourClose;
         this.flagSeller = flagSeller;
-
     }
 
-    public PuntoCarga(int idPunto,string address,double latitude,double longitude,string type,string icon,int cost,int hourOpen,int hourClose,int flagSeller, int idType)
-    {
-
+    public PuntoCarga(int idPunto, String address, double latitude, double longitude, String type, int icon, int cost, int hourOpen, int hourClose, int flagSeller, int idType) {
         this.idPunto = idPunto;
         this.address = address;
         this.latitude = latitude;
@@ -113,63 +109,47 @@ public class PuntoCarga {
         this.hourOpen = hourOpen;
         this.hourClose = hourClose;
         this.flagSeller = flagSeller;
-
     }
 
-    public EstadoNegocio estaAbierto()
-    {
+    public EstadoNegocio estaAbierto() {
         //Get Current Date
         Date currentDate = new Date();
 
-        if (this.hourClose + this.hourOpen == 0)
-        {
+        if (this.hourClose + this.hourOpen == 0) {
             //Sin horario determinado devuelvo false
             return EstadoNegocio.Indeterminado;
         }
-        if (currentDate.hour >= this.hourOpen && currentDate.hour() < this.hourClose)
-        {
+        if (currentDate.getTime() >= this.hourOpen && currentDate.getTime() < this.hourClose) {
             return EstadoNegocio.Abierto;
-        }else if (this.hourOpen >= this.hourClose)
-        {
+        } else if (this.hourOpen >= this.hourClose) {
             return EstadoNegocio.Abierto;
-        }else
-        {
+        } else {
             return EstadoNegocio.Cerrado;
         }
 
     }
 
-    public string detalleParaMapa() {
+    public String detalleParaMapa() {
         return this.type;
     }
 
-    public string getHorarioDeAtencion()
-    {
-        if (this.hourClose + this.hourOpen != 0)
-        {
-            string apertura = this.hourOpen + ":00";
-            string cierre = this.hourClose + ":00";
+    public String getHorarioDeAtencion() {
+        if (this.hourClose + this.hourOpen != 0) {
+            String apertura = this.hourOpen + ":00";
+            String cierre = this.hourClose + ":00";
             return  apertura + " - " + cierre + " HS";
-    }else //En caso de que no tenga horario cargado muestro solo el tipo
-        {
+        } else {
+            //En caso de que no tenga horario cargado muestro solo el tipo
             return "Sin horario cargado";
         }
     }
 
     public boolean vendeSube() {
-        if (this.flagSeller > 0) {
-            return true;
-        }
-        return false;
+        return this.flagSeller > 0;
     }
 
-    public boolean cobraPorCargar()
-    {
-        if (this.cost > 0)
-        {
-            return true;
-        }
-        return false;
+    public boolean cobraPorCargar() {
+        return this.cost > 0;
 
     }
 
