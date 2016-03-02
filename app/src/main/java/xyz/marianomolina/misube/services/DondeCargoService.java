@@ -22,12 +22,6 @@ public class DondeCargoService {
 
     Filtro miFiltro = new Filtro();
 
-    public String generarURLValida(String url) throws UnsupportedEncodingException {
-        //Devuelve una url valida
-        return URLEncoder.encode(url,"UTF-8");
-    }
-
-
     public void obtenerPuntosCargaPOST() throws IOException {
 
         Retrofit retrofit = new Retrofit.Builder()
