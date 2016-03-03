@@ -2,11 +2,8 @@ package xyz.marianomolina.misube.fragments;
 
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +22,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -37,7 +41,14 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.PermissionUtils;
 import permissions.dispatcher.RuntimePermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.marianomolina.misube.R;
+import xyz.marianomolina.misube.model.PuntosCarga;
+import xyz.marianomolina.misube.services.DondeCargoAPI;
 
 
 /**
@@ -45,7 +56,8 @@ import xyz.marianomolina.misube.R;
  * Twitter: @xsincrueldadx
  */
 @RuntimePermissions
-public class MapViewFragment extends Fragment {
+public class MapViewFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
     // TAG
     private static final String LOG_TAG = MapViewFragment.class.getSimpleName();
 
@@ -59,6 +71,12 @@ public class MapViewFragment extends Fragment {
     private SupportMapFragment supportMapFragment;
     private FloatingActionButton btn_find_my_location;
 
+    // location
+    private LocationRequest locationRequest;
+    private GoogleApiClient googleApiClient;
+    private Location mLocation;
+    private LatLng USER_LOC;
+
     public MapViewFragment() {
         // Required empty public constructor
     }
@@ -71,6 +89,12 @@ public class MapViewFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
         if (checkGooglePlayServices()) {
 
@@ -102,33 +126,33 @@ public class MapViewFragment extends Fragment {
                 map = googleMap;
 
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
                 // Ignorar el error que esta marcando, los permisos ya estan implementados
-                map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
+                map.setMyLocationEnabled(true);
 
-                // Centramos el mapa en BUENOS AIRES
-                LatLng BUE = new LatLng(-34.6160275, -58.4333203);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(BUE, 13));
+                if (mLocation != null) {
+                    USER_LOC = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 13));
+                } else {
+                    // Centramos el mapa en BUENOS AIRES
+                    USER_LOC = new LatLng(-34.6160275, -58.4333203);
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 12));
+                }
 
                 btn_find_my_location.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // GET MyLocation
-                        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                        Criteria criteria = new Criteria();
-                        String provider = service.getBestProvider(criteria, false);
-                        // Ignorar el error que esta marcando, los permisos ya estan implementados
-                        Location location = service.getLastKnownLocation(provider);
-                        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                        //Toast.makeText(getContext(), "LOCATION DATA: " + userLocation, Toast.LENGTH_LONG).show();
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
+                        try {
+                            getLocation(mLocation);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.d(LOG_TAG, "Error al ejecutar el DondeCargoService");
+                        }
                     }
                 });
             }
         });
     }
-
 
     /*
     * Google Play API
@@ -137,14 +161,75 @@ public class MapViewFragment extends Fragment {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int result = api.isGooglePlayServicesAvailable(getContext());
         if (result != ConnectionResult.SUCCESS) {
-           if (api.isUserResolvableError(result)) {
-               api.getErrorDialog(getActivity(), result, PLAY_SERVICES_RESOLUTION_REQUEST).show();
-           }
+            if (api.isUserResolvableError(result)) {
+                api.getErrorDialog(getActivity(), result, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
             return false;
         }
         return true;
     }
-    
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    /*
+    * Location
+    * */
+    protected void getLocation(Location location) throws IOException {
+        /*
+        // GET MyLocation
+        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = service.getBestProvider(criteria, true);
+
+        // Ignorar el error que esta marcando, los permisos ya estan implementados
+        Location location = service.getLastKnownLocation(provider);
+        */
+        if (location != null) {
+            Log.d(LOG_TAG, "El GPS esta encendido");
+            LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
+
+            dondeCargoService();
+        } else {
+            Log.d(LOG_TAG, "Error de conexion");
+        }
+    }
+
+    @Override
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+    public void onConnected(@Nullable Bundle bundle) {
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(10000);
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(LOG_TAG, "GoogleApiClient connection has been suspend");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.i(LOG_TAG, "GoogleApiClient connection has failed");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(LOG_TAG, "onLocationChanged" + location.toString());
+        mLocation = location;
+    }
+
     /*
     * Permisions
     * */
@@ -243,5 +328,33 @@ public class MapViewFragment extends Fragment {
             if (target == null) return;
             onMapDenied();
         }
+    }
+
+
+    /*
+    * REST adapter
+    * */
+    public void dondeCargoService() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://dondecargolasube.com.ar/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
+
+        Call<PuntosCarga> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
+        call.enqueue(new Callback<PuntosCarga>() {
+            @Override
+            public void onResponse(Call<PuntosCarga> call, Response<PuntosCarga> response) {
+                Log.d(LOG_TAG, "Response message: " + response.message());
+            }
+
+            @Override
+            public void onFailure(Call<PuntosCarga> call, Throwable t) {
+                Log.d(LOG_TAG, "RetrofitError: " + t.getLocalizedMessage());
+            }
+        });
+
     }
 }

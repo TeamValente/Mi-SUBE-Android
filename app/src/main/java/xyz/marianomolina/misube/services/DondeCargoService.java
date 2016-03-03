@@ -1,5 +1,7 @@
 package xyz.marianomolina.misube.services;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -18,7 +20,7 @@ import xyz.marianomolina.misube.model.PuntosCarga;
  * Created by hernancoppola on 29/2/16.
  */
 public class DondeCargoService {
-
+    private static final String LOG_TAG = DondeCargoService.class.getSimpleName();
 
     Filtro miFiltro = new Filtro();
 
@@ -34,10 +36,7 @@ public class DondeCargoService {
         Call<PuntosCarga> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
         Response<PuntosCarga> execute = call.execute();
 
-
+        Log.d(LOG_TAG, "Response: " + execute);
     }
-
-
-
 
 }
