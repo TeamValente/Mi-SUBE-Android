@@ -200,7 +200,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
 
-            dondeCargoService();
+            dondeCargoService(userLocation.latitude,userLocation.longitude);
         } else {
             Log.d(LOG_TAG, "Error de conexion");
         }
@@ -335,7 +335,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
     /*
     * REST adapter
     * */
-    public void dondeCargoService() {
+    public void dondeCargoService(double latitude, double longitude ) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://dondecargolasube.com.ar/")
@@ -344,7 +344,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
         DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
 
-        Call<List<PuntoCarga>> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
+        Call<List<PuntoCarga>> call = service.loadPuntosCarga("1390472",latitude,longitude);
         call.enqueue(new Callback<List<PuntoCarga>>() {
             @Override
             public void onResponse(Call<List<PuntoCarga>> call, Response<List<PuntoCarga>> response) {
