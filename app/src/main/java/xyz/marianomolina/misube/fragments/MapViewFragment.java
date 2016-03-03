@@ -4,6 +4,7 @@ package xyz.marianomolina.misube.fragments;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,8 +47,6 @@ import permissions.dispatcher.RuntimePermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.marianomolina.misube.R;
 import xyz.marianomolina.misube.model.PuntoCarga;
 import xyz.marianomolina.misube.services.DondeCargoAPI;
@@ -61,7 +61,6 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
     // TAG
     private static final String LOG_TAG = MapViewFragment.class.getSimpleName();
-
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 167;
 
     // Permission Constants
@@ -200,7 +199,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
 
-            dondeCargoService(userLocation.latitude,userLocation.longitude);
+            dondeCargoService(userLocation.latitude, userLocation.longitude);
         } else {
             Log.d(LOG_TAG, "Error de conexion");
         }
@@ -336,19 +335,12 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
     * REST adapter
     * */
     public void dondeCargoService(double latitude, double longitude ) {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://dondecargolasube.com.ar/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
-
-        Call<List<PuntoCarga>> call = service.loadPuntosCarga("1390472",latitude,longitude);
+        DondeCargoAPI service = DondeCargoAPI.retrofit.create(DondeCargoAPI.class);
+        Call<List<PuntoCarga>> call = service.loadPuntosCarga("1390472", latitude, longitude);
         call.enqueue(new Callback<List<PuntoCarga>>() {
             @Override
             public void onResponse(Call<List<PuntoCarga>> call, Response<List<PuntoCarga>> response) {
-                Log.d(LOG_TAG, "Response message: " + response.body());
+                parseGeoData(map, response.body());
             }
 
             @Override
@@ -356,6 +348,19 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
                 Log.d(LOG_TAG, "RetrofitError: " + t.getLocalizedMessage());
             }
         });
+    }
 
+
+    private void parseGeoData(GoogleMap map, List<PuntoCarga> items) {
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        for (int i = 0; i < items.size(); i++) {
+            markerOptions.position(new LatLng(items.get(i).getLatitude(), items.get(i).getLongitude()));
+            markerOptions.title(items.get(i).detalleParaMapa());
+            markerOptions.snippet(items.get(i).getAddress());
+
+            // Agregamos los marker al mapa.
+            map.addMarker(markerOptions);
+        }
     }
 }

@@ -3,8 +3,6 @@ package xyz.marianomolina.misube.services;
 import java.io.IOException;
 import java.util.List;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.marianomolina.misube.model.Filtro;
 import xyz.marianomolina.misube.model.PuntoCarga;
 
@@ -21,18 +19,11 @@ public class DondeCargoService {
     }
 
     public void obtenerPuntosCargaPOST() throws IOException {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://dondecargolasube.com.ar/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
+        DondeCargoAPI service = DondeCargoAPI.retrofit.create(DondeCargoAPI.class);
 
     }
 
-    public List<PuntoCarga> aplicarFiltro(List<PuntoCarga> listadoDePuntos)
-    {
+    public List<PuntoCarga> aplicarFiltro(List<PuntoCarga> listadoDePuntos) {
 
         return listadoDePuntos;
 
