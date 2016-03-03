@@ -15,7 +15,7 @@ public interface DondeCargoAPI {
 
     @FormUrlEncoded
     @POST("core/?query=getNearPoints")
-    Call<List<PuntoCarga>> loadPuntosCarga(@Field("session") String session, @Field("lat") String lat, @Field("lng") String lng);
+    Call<List<PuntoCarga>> loadPuntosCarga(@Field("session") String session, @Field("lat") double lat, @Field("lng") double lng);
 
 
 
