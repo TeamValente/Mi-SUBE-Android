@@ -33,10 +33,9 @@ public class DondeCargoService {
 
         DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
 
-        Call<PuntosCarga> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
-        Response<PuntosCarga> execute = call.execute();
-
-        Log.d(LOG_TAG, "Response: " + execute);
+        //Call<PuntosCarga> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
+        //Response<PuntosCarga> execute = call.execute();
+        //Log.d(LOG_TAG, "Response: " + execute);
     }
 
 }

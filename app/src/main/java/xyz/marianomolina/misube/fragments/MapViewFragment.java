@@ -33,6 +33,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.List;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -343,15 +344,15 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
         DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
 
-        Call<PuntosCarga> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
-        call.enqueue(new Callback<PuntosCarga>() {
+        Call<List<PuntosCarga>> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
+        call.enqueue(new Callback<List<PuntosCarga>>() {
             @Override
-            public void onResponse(Call<PuntosCarga> call, Response<PuntosCarga> response) {
-                Log.d(LOG_TAG, "Response message: " + response.message());
+            public void onResponse(Call<List<PuntosCarga>> call, Response<List<PuntosCarga>> response) {
+                Log.d(LOG_TAG, "Response message: " + response.body());
             }
 
             @Override
-            public void onFailure(Call<PuntosCarga> call, Throwable t) {
+            public void onFailure(Call<List<PuntosCarga>> call, Throwable t) {
                 Log.d(LOG_TAG, "RetrofitError: " + t.getLocalizedMessage());
             }
         });

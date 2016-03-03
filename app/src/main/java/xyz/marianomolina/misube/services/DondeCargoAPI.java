@@ -1,5 +1,7 @@
 package xyz.marianomolina.misube.services;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -13,10 +15,7 @@ public interface DondeCargoAPI {
 
     @FormUrlEncoded
     @POST("core/?query=getNearPoints")
-    Call<PuntosCarga> loadPuntosCarga(@Field("session") String session,
-                                      @Field("lat") String lat,
-                                      @Field("lng") String lng
-                                     );
+    Call<List<PuntosCarga>> loadPuntosCarga(@Field("session") String session, @Field("lat") String lat, @Field("lng") String lng);
 
 
 
