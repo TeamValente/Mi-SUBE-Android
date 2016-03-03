@@ -48,7 +48,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import xyz.marianomolina.misube.R;
-import xyz.marianomolina.misube.model.PuntosCarga;
+import xyz.marianomolina.misube.model.PuntoCarga;
 import xyz.marianomolina.misube.services.DondeCargoAPI;
 
 
@@ -344,15 +344,15 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
         DondeCargoAPI service = retrofit.create(DondeCargoAPI.class);
 
-        Call<List<PuntosCarga>> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
-        call.enqueue(new Callback<List<PuntosCarga>>() {
+        Call<List<PuntoCarga>> call = service.loadPuntosCarga("1390472","-34.61201","-58.44356");
+        call.enqueue(new Callback<List<PuntoCarga>>() {
             @Override
-            public void onResponse(Call<List<PuntosCarga>> call, Response<List<PuntosCarga>> response) {
+            public void onResponse(Call<List<PuntoCarga>> call, Response<List<PuntoCarga>> response) {
                 Log.d(LOG_TAG, "Response message: " + response.body());
             }
 
             @Override
-            public void onFailure(Call<List<PuntosCarga>> call, Throwable t) {
+            public void onFailure(Call<List<PuntoCarga>> call, Throwable t) {
                 Log.d(LOG_TAG, "RetrofitError: " + t.getLocalizedMessage());
             }
         });
