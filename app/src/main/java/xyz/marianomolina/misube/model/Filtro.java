@@ -8,6 +8,39 @@ public class Filtro {
     boolean ocultarCobraCarga = false;
     boolean ocultarCerrados = false;
     boolean ocultarNoVendeSUBE = false;
+
+    public boolean isOcultarCerrados() {
+        return ocultarCerrados;
+    }
+
+    public void setOcultarCerrados(boolean ocultarCerrados) {
+        this.ocultarCerrados = ocultarCerrados;
+    }
+
+    public boolean isOcultarCobraCarga() {
+        return ocultarCobraCarga;
+    }
+
+    public void setOcultarCobraCarga(boolean ocultarCobraCarga) {
+        this.ocultarCobraCarga = ocultarCobraCarga;
+    }
+
+    public boolean isOcultarNoVendeSUBE() {
+        return ocultarNoVendeSUBE;
+    }
+
+    public void setOcultarNoVendeSUBE(boolean ocultarNoVendeSUBE) {
+        this.ocultarNoVendeSUBE = ocultarNoVendeSUBE;
+    }
+
+    public boolean isOcutarHorarioSinIndicar() {
+        return ocutarHorarioSinIndicar;
+    }
+
+    public void setOcutarHorarioSinIndicar(boolean ocutarHorarioSinIndicar) {
+        this.ocutarHorarioSinIndicar = ocutarHorarioSinIndicar;
+    }
+
     boolean ocutarHorarioSinIndicar = false;
 
 
