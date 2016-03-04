@@ -12,9 +12,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:background="@color/secondary_text"
-        android:elevation="10dp"
+        android:elevation="30dp"
         android:id="@+id/detail_view"
         android:padding="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/label_direction_detail"
             style="@style/LabelDetailView.Response.Big"
-            android:text="Dirección" />
+            android:text="" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/label_distance_detail"
             style="@style/LabelDetailView.Response"
-            android:text="350 metros" />
+            android:text="" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/label_hours_detail"
             style="@style/LabelDetailView.Response"
-            android:text="8:00 a 21:00 Hs, Cerrado" />
+            android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,7 +90,7 @@
                 android:layout_weight="0.5"
                 android:id="@+id/label_seller_detail"
                 style="@style/LabelDetailView.Response"
-                android:text="No" />
+                android:text="" />
 
             <TextView
                 android:layout_width="0dp"
@@ -97,7 +98,7 @@
                 android:layout_weight="0.5"
                 android:id="@+id/label_charge_detail"
                 style="@style/LabelDetailView.Response"
-                android:text="No" />
+                android:text="" />
 
         </LinearLayout>
 

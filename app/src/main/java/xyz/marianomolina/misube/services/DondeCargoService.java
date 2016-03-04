@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import retrofit2.Call;
 import xyz.marianomolina.misube.model.Filtro;
 import xyz.marianomolina.misube.model.PuntoCarga;
 import xyz.marianomolina.misube.utils.EstadoNegocio;
@@ -20,15 +21,14 @@ public class DondeCargoService {
         this.miFiltro = miFiltro;
     }
 
-    public void obtenerPuntosCargaPOST() throws IOException {
+    public Call<List<PuntoCarga>> obtenerPuntosCargaPOST(double latitude, double longitude) throws IOException {
         DondeCargoAPI service = DondeCargoAPI.retrofit.create(DondeCargoAPI.class);
-
+        return service.loadPuntosCarga("1390472", latitude, longitude);
     }
 
     public List<PuntoCarga> aplicarFiltro(List<PuntoCarga> listadoDePuntos) {
 
-
-        Iterator<PuntoCarga> it= listadoDePuntos.iterator();
+        Iterator<PuntoCarga> it = listadoDePuntos.iterator();
 
         while(it.hasNext()) {
 
@@ -40,7 +40,7 @@ public class DondeCargoService {
             if (miFiltro.isOcultarCobraCarga() && punto.cobraPorCargar() ) {
                 it.remove();
             }
-            if (miFiltro.isOcultarNoVendeSUBE() && punto.vendeSube() == false ) {
+            if (miFiltro.isOcultarNoVendeSUBE() && !punto.vendeSube()) {
                 it.remove();
             }
             if (miFiltro.isOcutarHorarioSinIndicar() && punto.estaAbierto() == EstadoNegocio.Indeterminado ) {

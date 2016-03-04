@@ -43,17 +43,16 @@ public class Filtro {
 
     boolean ocutarHorarioSinIndicar = false;
 
+    public Filtro() {
 
-    public Filtro(){}
+    }
 
-    public Filtro(boolean ocultarCobraCarga,boolean ocultarCerrados,boolean ocultarNoVendeSUBE,boolean ocutarHorarioSinIndicar)
-    {
+    public Filtro(boolean ocultarCobraCarga,boolean ocultarCerrados,boolean ocultarNoVendeSUBE,boolean ocutarHorarioSinIndicar) {
         //Siempre se reciben
         this.ocultarCobraCarga = ocultarCobraCarga;
         this.ocultarCerrados = ocultarCerrados;
         this.ocultarNoVendeSUBE   = ocultarNoVendeSUBE;
         this.ocutarHorarioSinIndicar = ocutarHorarioSinIndicar;
     }
-
 
 }

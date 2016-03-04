@@ -31,7 +31,7 @@
     </style>
 
     <style name="LabelDetailView.Response.Big" parent="LabelDetailView.Response">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
 </resources>

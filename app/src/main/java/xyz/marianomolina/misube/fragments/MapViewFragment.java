@@ -4,7 +4,6 @@ package xyz.marianomolina.misube.fragments;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,10 +33,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -50,7 +54,6 @@ import retrofit2.Response;
 import xyz.marianomolina.misube.R;
 import xyz.marianomolina.misube.model.Filtro;
 import xyz.marianomolina.misube.model.PuntoCarga;
-import xyz.marianomolina.misube.services.DondeCargoAPI;
 import xyz.marianomolina.misube.services.DondeCargoService;
 
 
@@ -72,12 +75,16 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
     private GoogleMap map;
     private SupportMapFragment supportMapFragment;
     private FloatingActionButton btn_find_my_location;
+    private LinearLayout detail_view;
 
     // location
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
     private Location mLocation;
     private LatLng USER_LOC;
+    private DondeCargoService mService;
+
+    private Map<Marker, PuntoCarga> markerPuntoCargaMap = new HashMap<>();
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -98,12 +105,17 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
                 .addOnConnectionFailedListener(this)
                 .build();
 
+
         if (checkGooglePlayServices()) {
 
-            btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
+            mService = new DondeCargoService();
 
             FragmentManager fm = getChildFragmentManager();
             supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
+
+            // find elements
+            btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
+            detail_view = (LinearLayout) getActivity().findViewById(R.id.detail_view);
 
             if (supportMapFragment == null) {
                 supportMapFragment = SupportMapFragment.newInstance();
@@ -192,7 +204,6 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
         LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = service.getBestProvider(criteria, true);
-
         // Ignorar el error que esta marcando, los permisos ya estan implementados
         Location location = service.getLastKnownLocation(provider);
         */
@@ -332,13 +343,11 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
         }
     }
 
-
     /*
     * REST adapter
     * */
-    public void dondeCargoService(double latitude, double longitude ) {
-        DondeCargoAPI service = DondeCargoAPI.retrofit.create(DondeCargoAPI.class);
-        Call<List<PuntoCarga>> call = service.loadPuntosCarga("1390472", latitude, longitude);
+    public void dondeCargoService(double latitude, double longitude) throws IOException {
+        Call<List<PuntoCarga>> call = mService.obtenerPuntosCargaPOST(latitude, longitude);
         call.enqueue(new Callback<List<PuntoCarga>>() {
             @Override
             public void onResponse(Call<List<PuntoCarga>> call, Response<List<PuntoCarga>> response) {
@@ -352,25 +361,69 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
         });
     }
 
-
     private void parseGeoData(GoogleMap map, List<PuntoCarga> items) {
         MarkerOptions markerOptions = new MarkerOptions();
-
+        Marker mMarker = null;
         //Aplico Filtros antes de dibujar
         Filtro miFiltro = new Filtro(false,false,false,false);
-        DondeCargoService dService = new DondeCargoService();
 
-        dService.setMiFiltro(miFiltro);
-        dService.aplicarFiltro(items);
-
+        mService.setMiFiltro(miFiltro);
+        mService.aplicarFiltro(items);
 
         for (int i = 0; i < items.size(); i++) {
             markerOptions.position(new LatLng(items.get(i).getLatitude(), items.get(i).getLongitude()));
-            markerOptions.title(items.get(i).detalleParaMapa());
-            markerOptions.snippet(items.get(i).getAddress());
-
             // Agregamos los marker al mapa.
-            map.addMarker(markerOptions);
+            mMarker = map.addMarker(markerOptions);
+            // Guardamos los datos del marker en un hashMap
+            markerPuntoCargaMap.put(mMarker, items.get(i));
         }
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                PuntoCarga puntoCarga = markerPuntoCargaMap.get(marker);
+
+                // findDetail Elements
+                TextView label_direction = (TextView) getActivity().findViewById(R.id.label_direction_detail);
+                TextView label_distance = (TextView) getActivity().findViewById(R.id.label_distance_detail);
+                TextView label_hours = (TextView) getActivity().findViewById(R.id.label_hours_detail);
+                TextView label_seller = (TextView) getActivity().findViewById(R.id.label_seller_detail);
+                TextView label_charge_cost = (TextView) getActivity().findViewById(R.id.label_charge_detail);
+                TextView label_type = (TextView) getActivity().findViewById(R.id.label_type_detail);
+
+                // setLabelValues
+                label_direction.setText(puntoCarga.getAddress());
+                // TODO: H revisar la distancia porque esta viniendo Null
+                label_distance.setText(puntoCarga.getDistance());
+                label_hours.setText(puntoCarga.getHorarioDeAtencion());
+                if (puntoCarga.vendeSube()) {
+                    label_charge_cost.setText("SI");
+                } else {
+                    label_charge_cost.setText("No");
+                }
+                if (puntoCarga.cobraPorCargar()) {
+                    label_seller.setText("Si");
+                } else {
+                    label_seller.setText("No");
+                }
+                label_type.setText(puntoCarga.detalleParaMapa());
+
+                btn_find_my_location.hide();
+                detail_view.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                detail_view.setVisibility(View.INVISIBLE);
+                btn_find_my_location.show();
+            }
+        });
     }
+
+
+
 }
