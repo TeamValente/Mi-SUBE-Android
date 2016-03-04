@@ -17,4 +17,21 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- DetailView Texts -->
+    <style name="LabelDetailView" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/text_color_70</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="LabelDetailView.Response" parent="LabelDetailView">
+        <item name="android:textColor">@color/icons</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="LabelDetailView.Response.Big" parent="LabelDetailView.Response">
+        <item name="android:textSize">30sp</item>
+    </style>
+
 </resources>

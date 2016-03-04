@@ -9,4 +9,113 @@
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/secondary_text"
+        android:elevation="10dp"
+        android:id="@+id/detail_view"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_direction_detail"
+            style="@style/LabelDetailView.Response.Big"
+            android:text="Dirección" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LabelDetailView"
+            android:text="@string/label_distance" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_distance_detail"
+            style="@style/LabelDetailView.Response"
+            android:text="350 metros" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LabelDetailView"
+            android:text="@string/label_hours" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_hours_detail"
+            style="@style/LabelDetailView.Response"
+            android:text="8:00 a 21:00 Hs, Cerrado" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_top_set"
+            android:paddingTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                style="@style/LabelDetailView"
+                android:text="@string/label_seller" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                style="@style/LabelDetailView"
+                android:text="@string/label_chargecost" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_bottom_set"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:id="@+id/label_seller_detail"
+                style="@style/LabelDetailView.Response"
+                android:text="No" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:id="@+id/label_charge_detail"
+                style="@style/LabelDetailView.Response"
+                android:text="No" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LabelDetailView"
+            android:text="@string/label_type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/label_type_detail"
+            style="@style/LabelDetailView.Response"
+            android:text="Comercio" />
+
+    </LinearLayout>
+
 </RelativeLayout>
+
+

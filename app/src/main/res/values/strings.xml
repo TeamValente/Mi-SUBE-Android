@@ -15,6 +15,13 @@
     <!-- View Movimientos -->
     <string name="title_activity_movimientos">Movimientos</string>
 
+    <!-- View Mapa -->
+    <string name="label_distance">Distancia</string>
+    <string name="label_hours">Horarios</string>
+    <string name="label_seller">Vende SUBE</string>
+    <string name="label_chargecost">Cobra por cargar</string>
+    <string name="label_type">Tipo de Lugar</string>
+
     <!-- View Configuración -->
     <string name="title_activity_config">@string/action_settings</string>
 
