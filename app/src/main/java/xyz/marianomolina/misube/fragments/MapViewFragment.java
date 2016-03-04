@@ -48,8 +48,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.marianomolina.misube.R;
+import xyz.marianomolina.misube.model.Filtro;
 import xyz.marianomolina.misube.model.PuntoCarga;
 import xyz.marianomolina.misube.services.DondeCargoAPI;
+import xyz.marianomolina.misube.services.DondeCargoService;
 
 
 /**
@@ -353,6 +355,14 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
     private void parseGeoData(GoogleMap map, List<PuntoCarga> items) {
         MarkerOptions markerOptions = new MarkerOptions();
+
+        //Aplico Filtros antes de dibujar
+        Filtro miFiltro = new Filtro(false,false,false,false);
+        DondeCargoService dService = new DondeCargoService();
+
+        dService.setMiFiltro(miFiltro);
+        dService.aplicarFiltro(items);
+
 
         for (int i = 0; i < items.size(); i++) {
             markerOptions.position(new LatLng(items.get(i).getLatitude(), items.get(i).getLongitude()));
