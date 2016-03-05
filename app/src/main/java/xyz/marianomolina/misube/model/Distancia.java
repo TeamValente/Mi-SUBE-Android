@@ -8,6 +8,9 @@ public class Distancia {
     private String unidad;
     private String valorString;
 
+    public Distancia()
+    {}
+
     public Distancia(Double valorNum, String valorStr, String unit) {
         this.setValorNumerico(valorNum);
         this.setValorString(valorStr);
