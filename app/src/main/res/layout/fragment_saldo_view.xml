@@ -81,7 +81,7 @@
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:id="@+id/btn_open_move_list"
-                    android:background="@drawable/ic_info_outline_white_24dp"/>
+                    android:background="@drawable/ic_error_outline"/>
 
             </LinearLayout>
 

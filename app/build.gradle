@@ -30,6 +30,8 @@ android {
 
         // Enabling multidex support.
         multiDexEnabled true
+        // Enabling vector support.
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

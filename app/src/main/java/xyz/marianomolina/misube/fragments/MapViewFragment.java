@@ -64,7 +64,10 @@ import xyz.marianomolina.misube.services.DondeCargoService;
  * Twitter: @xsincrueldadx
  */
 @RuntimePermissions
-public class MapViewFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class MapViewFragment extends Fragment implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     // TAG
     private static final String LOG_TAG = MapViewFragment.class.getSimpleName();
@@ -77,6 +80,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
     private GoogleMap map;
     private SupportMapFragment supportMapFragment;
     private FloatingActionButton btn_find_my_location;
+    private FloatingActionButton btn_close_detail;
     private LinearLayout detail_view;
 
     // location
@@ -118,6 +122,9 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
             // find elements
             btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
+            btn_close_detail = (FloatingActionButton) getActivity().findViewById(R.id.btn_close_detail);
+            btn_close_detail.hide();
+
             detail_view = (LinearLayout) getActivity().findViewById(R.id.detail_view);
 
             if (supportMapFragment == null) {
@@ -413,6 +420,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
                 label_seller.setText(detalleHelper.getVendeSube());
                 label_type.setText(detalleHelper.getTipoPunto());
 
+                btn_close_detail.show();
                 btn_find_my_location.hide();
                 detail_view.setVisibility(View.VISIBLE);
                 map.getUiSettings().setScrollGesturesEnabled(false);
@@ -424,11 +432,23 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                detail_view.setVisibility(View.INVISIBLE);
-                btn_find_my_location.show();
-                map.getUiSettings().setScrollGesturesEnabled(true);
+                toggleDetail();
             }
         });
+
+        btn_close_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleDetail();
+            }
+        });
+    }
+
+    private void toggleDetail() {
+        detail_view.setVisibility(View.INVISIBLE);
+        btn_find_my_location.show();
+        map.getUiSettings().setScrollGesturesEnabled(true);
+        btn_close_detail.hide();
     }
 
 
