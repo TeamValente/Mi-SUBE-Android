@@ -148,8 +148,14 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
                 map.setMyLocationEnabled(true);
 
                 if (mLocation != null) {
-                    USER_LOC = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 13));
+                    try {
+                        getLocation(mLocation);
+
+                        USER_LOC = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 13));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     // Centramos el mapa en BUENOS AIRES
                     USER_LOC = new LatLng(-34.6160275, -58.4333203);
@@ -217,7 +223,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
             mUbicacion = new MiUbicacion();
             mUbicacion.setLongitude(userLocation.longitude);
             mUbicacion.setLatitud(userLocation.latitude);
-            dondeCargoService(userLocation.latitude, userLocation.longitude);
+            getPuntosDeCarga(userLocation.latitude, userLocation.longitude);
         } else {
             Log.d(LOG_TAG, "Error de conexion");
         }
@@ -351,7 +357,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
     /*
     * REST adapter
     * */
-    public void dondeCargoService(double latitude, double longitude) throws IOException {
+    public void getPuntosDeCarga(double latitude, double longitude) throws IOException {
         Call<List<PuntoCarga>> call = mService.obtenerPuntosCargaPOST(latitude, longitude);
         call.enqueue(new Callback<List<PuntoCarga>>() {
             @Override
@@ -366,7 +372,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
         });
     }
 
-    private void parseGeoData(GoogleMap map, List<PuntoCarga> items) {
+    private void parseGeoData(final GoogleMap map, List<PuntoCarga> items) {
         MarkerOptions markerOptions = new MarkerOptions();
         Marker mMarker = null;
         //Aplico Filtros antes de dibujar
@@ -409,6 +415,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
 
                 btn_find_my_location.hide();
                 detail_view.setVisibility(View.VISIBLE);
+                map.getUiSettings().setScrollGesturesEnabled(false);
                 return false;
             }
         });
@@ -419,6 +426,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
             public void onMapClick(LatLng latLng) {
                 detail_view.setVisibility(View.INVISIBLE);
                 btn_find_my_location.show();
+                map.getUiSettings().setScrollGesturesEnabled(true);
             }
         });
     }
