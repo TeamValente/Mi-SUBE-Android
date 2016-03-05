@@ -5,6 +5,7 @@ import android.location.Location;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 /**
  * Created by hernancoppola on 29/2/16.
@@ -30,7 +31,7 @@ public class MiUbicacion {
 
     double longitude;
 
-    private Location loc; //Ubicacion Actual
+    private Location loc = new Location("MiUbicacion"); //Ubicacion Actual
     private Location instLoc = new Location("punto1"); // Ubicacion del puntoCarga
 
 
@@ -42,7 +43,6 @@ public class MiUbicacion {
         instLoc.setLatitude(point.latitude);
         instLoc.setLongitude(point.longitude);
 
-        DecimalFormat df = new DecimalFormat("0.00##");
         loc.setLatitude(this.latitud);
         loc.setLongitude(this.longitude);
 
@@ -50,7 +50,7 @@ public class MiUbicacion {
         valorMetros = (double)loc.distanceTo(instLoc);
 
         Distancia retDistancia;
-        String unidadRet = "Metro";
+        String unidadRet = "metros";
 
         if (valorMetros >= 1000)
         {
@@ -64,7 +64,7 @@ public class MiUbicacion {
             {
                 unidadRet = "kilometros";
             }
-            retDistancia = new Distancia(valorEnKm, df.format(valorEnKm),unidadRet);
+            retDistancia = new Distancia(valorEnKm, String.format(Locale.ENGLISH, "%.2f", valorEnKm),unidadRet);
 
         }else
         {
@@ -73,7 +73,7 @@ public class MiUbicacion {
                 unidadRet = "metro";
             }
 
-            retDistancia = new Distancia(valorMetros, df.format(valorMetros),unidadRet);
+            retDistancia = new Distancia(valorMetros, String.format(Locale.ENGLISH, "%.0f", valorMetros),unidadRet);
         }
 
         return retDistancia;

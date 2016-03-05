@@ -52,7 +52,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import xyz.marianomolina.misube.R;
+import xyz.marianomolina.misube.helper.DetailHelper;
 import xyz.marianomolina.misube.model.Filtro;
+import xyz.marianomolina.misube.model.MiUbicacion;
 import xyz.marianomolina.misube.model.PuntoCarga;
 import xyz.marianomolina.misube.services.DondeCargoService;
 
@@ -83,6 +85,7 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
     private Location mLocation;
     private LatLng USER_LOC;
     private DondeCargoService mService;
+    private MiUbicacion mUbicacion;
 
     private Map<Marker, PuntoCarga> markerPuntoCargaMap = new HashMap<>();
 
@@ -211,7 +214,9 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
             Log.d(LOG_TAG, "El GPS esta encendido");
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
-
+            mUbicacion = new MiUbicacion();
+            mUbicacion.setLongitude(userLocation.longitude);
+            mUbicacion.setLatitud(userLocation.latitude);
             dondeCargoService(userLocation.latitude, userLocation.longitude);
         } else {
             Log.d(LOG_TAG, "Error de conexion");
@@ -381,7 +386,10 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
                 PuntoCarga puntoCarga = markerPuntoCargaMap.get(marker);
+                //Uso el Helper para llenar los campos
+                DetailHelper detalleHelper = new DetailHelper(puntoCarga);
 
                 // findDetail Elements
                 TextView label_direction = (TextView) getActivity().findViewById(R.id.label_direction_detail);
@@ -392,21 +400,12 @@ public class MapViewFragment extends Fragment implements GoogleApiClient.Connect
                 TextView label_type = (TextView) getActivity().findViewById(R.id.label_type_detail);
 
                 // setLabelValues
-                label_direction.setText(puntoCarga.getAddress());
-                // TODO: H revisar la distancia porque esta viniendo Null
-                label_distance.setText(puntoCarga.getDistance());
-                label_hours.setText(puntoCarga.getHorarioDeAtencion());
-                if (puntoCarga.vendeSube()) {
-                    label_charge_cost.setText("SI");
-                } else {
-                    label_charge_cost.setText("No");
-                }
-                if (puntoCarga.cobraPorCargar()) {
-                    label_seller.setText("Si");
-                } else {
-                    label_seller.setText("No");
-                }
-                label_type.setText(puntoCarga.detalleParaMapa());
+                label_direction.setText(detalleHelper.getDireccion());
+                label_distance.setText(detalleHelper.getDistancia(mUbicacion));
+                label_hours.setText(detalleHelper.getHorario());
+                label_charge_cost.setText(detalleHelper.getCobraCarga());
+                label_seller.setText(detalleHelper.getVendeSube());
+                label_type.setText(detalleHelper.getTipoPunto());
 
                 btn_find_my_location.hide();
                 detail_view.setVisibility(View.VISIBLE);
