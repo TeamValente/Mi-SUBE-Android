@@ -445,7 +445,6 @@ public class MapViewFragment extends Fragment implements
                 label_type.setText(detalleHelper.getTipoPunto());
 
                 showDetail();
-                map.getUiSettings().setScrollGesturesEnabled(false);
                 return false;
             }
         });
@@ -486,6 +485,7 @@ public class MapViewFragment extends Fragment implements
     }
 
     private void showDetail() {
+        map.getUiSettings().setScrollGesturesEnabled(false);
         btn_close_detail.show();
         btn_open_filter.hide();
         btn_find_my_location.hide();
