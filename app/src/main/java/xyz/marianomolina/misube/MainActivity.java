@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.masterTab);
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_saldo));
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_mapa));
+        // tabs sin label
+        //mTabLayout.addTab(mTabLayout.newTab());
+        //mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager mViewPager = (ViewPager) findViewById(R.id.masterViewPager);

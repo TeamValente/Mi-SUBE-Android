@@ -14,4 +14,5 @@ Aplicación Android para saber donde cargar la tarjeta SUBE y controlar tus gast
 ## Librerias OSS:
 * [PermissionsDispatcher](http://hotchemi.github.io/PermissionsDispatcher/)
 * [Retrofit](http://square.github.io/retrofit/)
+* [ViewAnimator](https://github.com/florent37/ViewAnimator/)
 * [Realm](https://realm.io/)

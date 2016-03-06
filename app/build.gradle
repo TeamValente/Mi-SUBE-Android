@@ -61,4 +61,7 @@ dependencies {
     // Permission
     compile 'com.github.hotchemi:permissionsdispatcher:2.0.7'
     apt 'com.github.hotchemi:permissionsdispatcher-processor:2.0.7'
+    // Animation
+    compile 'com.github.florent37:viewanimator:1.0.3@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
 }

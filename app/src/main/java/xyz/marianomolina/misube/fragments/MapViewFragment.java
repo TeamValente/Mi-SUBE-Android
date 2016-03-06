@@ -24,6 +24,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.florent37.viewanimator.ViewAnimator;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -576,6 +577,12 @@ public class MapViewFragment extends Fragment implements
         btn_open_filter.hide();
         btn_find_my_location.hide();
         detail_view.setVisibility(View.VISIBLE);
+        ViewAnimator.animate(detail_view)
+                .translationY(857, 0)
+                .alpha(0,1)
+                .descelerate()
+                .duration(1000)
+                .start();
     }
 
     private void showFilterView() {
@@ -584,6 +591,12 @@ public class MapViewFragment extends Fragment implements
         btn_open_filter.hide();
         btn_find_my_location.hide();
         filter_view.setVisibility(View.VISIBLE);
+        ViewAnimator.animate(filter_view)
+                .translationY(852, 0)
+                .alpha(0,1)
+                .descelerate()
+                .duration(1000)
+                .start();
     }
 
     private void hideFilterView() {
