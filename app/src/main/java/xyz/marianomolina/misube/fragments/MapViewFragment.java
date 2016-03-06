@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,11 +74,10 @@ public class MapViewFragment extends Fragment implements
     // TAG
     private static final String LOG_TAG = MapViewFragment.class.getSimpleName();
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 167;
-
     // Permission Constants
     private static final int REQUEST_SHOWMAP = 0;
     private static final String[] PERMISSION_SHOWMAP = new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
-    // propiedades
+    // view outlets
     private GoogleMap map;
     private SupportMapFragment supportMapFragment;
     private FloatingActionButton btn_find_my_location;
@@ -85,15 +86,20 @@ public class MapViewFragment extends Fragment implements
     private FloatingActionButton btn_open_filter;
     private LinearLayout detail_view;
     private LinearLayout filter_view;
+    private Switch option_hours;
+    private Switch option_chargecost;
+    private Switch option_noseller;
+    private Switch option_novisiblehours;
 
     // location
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
     private Location mLocation;
     private LatLng USER_LOC;
+    // model
     private DondeCargoService mService;
     private MiUbicacion mUbicacion;
-
+    private Filtro mFiltro;
     private Map<Marker, PuntoCarga> markerPuntoCargaMap = new HashMap<>();
 
     public MapViewFragment() {
@@ -115,7 +121,6 @@ public class MapViewFragment extends Fragment implements
                 .addOnConnectionFailedListener(this)
                 .build();
 
-
         if (checkGooglePlayServices()) {
 
             mService = new DondeCargoService();
@@ -136,6 +141,15 @@ public class MapViewFragment extends Fragment implements
 
             detail_view = (LinearLayout) getActivity().findViewById(R.id.detail_view);
             filter_view = (LinearLayout) getActivity().findViewById(R.id.filter_view);
+
+            // filterSwitch
+            option_hours = (Switch) getActivity().findViewById(R.id.switch_option_hours);
+            option_chargecost = (Switch) getActivity().findViewById(R.id.switch_option_chargecost);
+            option_noseller = (Switch) getActivity().findViewById(R.id.switch_option_noseller);
+            option_novisiblehours = (Switch) getActivity().findViewById(R.id.switch_option_novisiblehours);
+
+            //Aplico Filtros antes de dibujar
+            mFiltro = new Filtro(false,false,false,false);
 
             if (supportMapFragment == null) {
                 supportMapFragment = SupportMapFragment.newInstance();
@@ -184,6 +198,7 @@ public class MapViewFragment extends Fragment implements
                     @Override
                     public void onClick(View v) {
                         try {
+                            startLocationUpdate();
                             getLocation(mLocation);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -198,6 +213,67 @@ public class MapViewFragment extends Fragment implements
                         showFilterView();
                     }
                 });
+
+                /*
+                * Switch listeners
+                * */
+                option_hours.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            mFiltro.isOcultarCerrados();
+                            try {
+                                getLocation(mLocation);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                option_chargecost.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            mFiltro.isOcultarCobraCarga();
+                            try {
+                                getLocation(mLocation);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                option_noseller.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            mFiltro.isOcultarNoVendeSUBE();
+                            try {
+                                getLocation(mLocation);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                option_novisiblehours.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            mFiltro.isOcutarHorarioSinIndicar();
+                            try {
+                                getLocation(mLocation);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+
             }
         });
     }
@@ -229,18 +305,16 @@ public class MapViewFragment extends Fragment implements
         super.onStop();
     }
 
+    @Override
+    public void onPause() {
+        stopLocationUpdate();
+        super.onPause();
+    }
+
     /*
     * Location
     * */
     protected void getLocation(Location location) throws IOException {
-        /*
-        // GET MyLocation
-        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = service.getBestProvider(criteria, true);
-        // Ignorar el error que esta marcando, los permisos ya estan implementados
-        Location location = service.getLastKnownLocation(provider);
-        */
         if (location != null) {
             Log.d(LOG_TAG, "El GPS esta encendido");
 
@@ -252,6 +326,7 @@ public class MapViewFragment extends Fragment implements
             mUbicacion = new MiUbicacion();
             mUbicacion.setLongitude(userLocation.longitude);
             mUbicacion.setLatitud(userLocation.latitude);
+
             getPuntosDeCarga(userLocation.latitude, userLocation.longitude);
 
         } else {
@@ -262,10 +337,7 @@ public class MapViewFragment extends Fragment implements
     @Override
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     public void onConnected(@Nullable Bundle bundle) {
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        locationRequest.setInterval(10000);
-        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        startLocationUpdate();
     }
 
     @Override
@@ -282,6 +354,23 @@ public class MapViewFragment extends Fragment implements
     public void onLocationChanged(Location location) {
         Log.i(LOG_TAG, "onLocationChanged" + location.toString());
         mLocation = location;
+        try {
+            getLocation(mLocation);
+            stopLocationUpdate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void startLocationUpdate() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(10000);
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+    }
+
+    protected void stopLocationUpdate() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
     }
 
     /*
@@ -405,10 +494,7 @@ public class MapViewFragment extends Fragment implements
     private void parseGeoData(final GoogleMap map, List<PuntoCarga> items) {
         MarkerOptions markerOptions = new MarkerOptions();
         Marker mMarker = null;
-        //Aplico Filtros antes de dibujar
-        Filtro miFiltro = new Filtro(false,false,false,false);
-
-        mService.setMiFiltro(miFiltro);
+        mService.setMiFiltro(mFiltro);
         mService.aplicarFiltro(items);
 
         for (int i = 0; i < items.size(); i++) {
@@ -505,6 +591,7 @@ public class MapViewFragment extends Fragment implements
         btn_find_my_location.show();
         btn_open_filter.show();
         filter_view.setVisibility(View.INVISIBLE);
+        map.getUiSettings().setScrollGesturesEnabled(true);
     }
 
 }
