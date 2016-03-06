@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_alignParentBottom="true"
-        android:background="@color/secondary_text"
+        android:background="@color/bg_detail"
         android:elevation="30dp"
         android:id="@+id/detail_view"
         android:padding="@dimen/activity_horizontal_margin"
@@ -119,7 +119,62 @@
 
     </LinearLayout>
 
-    <!-- close -->
+    <!-- FilterView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_detail"
+        android:elevation="30dp"
+        android:visibility="gone"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_filter_view"
+            style="@style/LabelDetailView.Title"
+            android:layout_marginBottom="16dp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_hide_points"
+            style="@style/LabelDetailView.SubTitle"/>
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_option_hours"
+            style="@style/LabelDetailView.Switch"
+            android:id="@+id/switch_option_hours" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_option_cargecost"
+            style="@style/LabelDetailView.Switch"
+            android:id="@+id/switch_option_chargecost" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_option_noseller"
+            style="@style/LabelDetailView.Switch"
+            android:id="@+id/switch_option_noseller" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_option_novisiblehours"
+            style="@style/LabelDetailView.Switch"
+            android:id="@+id/switch_option_novisiblehours" />
+
+    </LinearLayout>
+
+    <!-- closeDetailView -->
     <android.support.design.widget.FloatingActionButton
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -131,6 +186,20 @@
         android:layout_alignParentRight="true"
         app:layout_anchor="@id/map_container"
         app:layout_anchorGravity="top|right|end"/>
+
+    <!-- openFilterView -->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:id="@+id/btn_open_filter"
+        android:src="@drawable/ic_tune"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="88dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:layout_anchorGravity="bottom|right|end"
+        app:fabSize="normal"
+        android:elevation="16dp"/>
 
 </RelativeLayout>
 

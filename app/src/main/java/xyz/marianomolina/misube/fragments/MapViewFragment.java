@@ -81,6 +81,7 @@ public class MapViewFragment extends Fragment implements
     private SupportMapFragment supportMapFragment;
     private FloatingActionButton btn_find_my_location;
     private FloatingActionButton btn_close_detail;
+    private FloatingActionButton btn_open_filter;
     private LinearLayout detail_view;
 
     // location
@@ -122,6 +123,9 @@ public class MapViewFragment extends Fragment implements
 
             // find elements
             btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
+            btn_open_filter = (FloatingActionButton) getActivity().findViewById(R.id.btn_open_filter);
+            btn_open_filter.hide();
+
             btn_close_detail = (FloatingActionButton) getActivity().findViewById(R.id.btn_close_detail);
             btn_close_detail.hide();
 
@@ -152,6 +156,7 @@ public class MapViewFragment extends Fragment implements
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 // Ignorar el error que esta marcando, los permisos ya estan implementados
                 map.getUiSettings().setMyLocationButtonEnabled(false);
+                map.getUiSettings().setMapToolbarEnabled(false);
                 map.setMyLocationEnabled(true);
 
                 if (mLocation != null) {
@@ -178,6 +183,13 @@ public class MapViewFragment extends Fragment implements
                             e.printStackTrace();
                             Log.d(LOG_TAG, "Error al ejecutar el DondeCargoService");
                         }
+                    }
+                });
+
+                btn_open_filter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(LOG_TAG, "Open filter");
                     }
                 });
             }
@@ -225,12 +237,17 @@ public class MapViewFragment extends Fragment implements
         */
         if (location != null) {
             Log.d(LOG_TAG, "El GPS esta encendido");
+
+            btn_open_filter.show();
+
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
+
             mUbicacion = new MiUbicacion();
             mUbicacion.setLongitude(userLocation.longitude);
             mUbicacion.setLatitud(userLocation.latitude);
             getPuntosDeCarga(userLocation.latitude, userLocation.longitude);
+
         } else {
             Log.d(LOG_TAG, "Error de conexion");
         }
@@ -390,6 +407,7 @@ public class MapViewFragment extends Fragment implements
 
         for (int i = 0; i < items.size(); i++) {
             markerOptions.position(new LatLng(items.get(i).getLatitude(), items.get(i).getLongitude()));
+            //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place));
             // Agregamos los marker al mapa.
             mMarker = map.addMarker(markerOptions);
             // Guardamos los datos del marker en un hashMap
@@ -420,9 +438,7 @@ public class MapViewFragment extends Fragment implements
                 label_seller.setText(detalleHelper.getVendeSube());
                 label_type.setText(detalleHelper.getTipoPunto());
 
-                btn_close_detail.show();
-                btn_find_my_location.hide();
-                detail_view.setVisibility(View.VISIBLE);
+                showDetail();
                 map.getUiSettings().setScrollGesturesEnabled(false);
                 return false;
             }
@@ -432,23 +448,31 @@ public class MapViewFragment extends Fragment implements
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                toggleDetail();
+                hideDetail();
             }
         });
 
         btn_close_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleDetail();
+                hideDetail();
             }
         });
     }
 
-    private void toggleDetail() {
+    private void hideDetail() {
         detail_view.setVisibility(View.INVISIBLE);
         btn_find_my_location.show();
+        btn_open_filter.show();
         map.getUiSettings().setScrollGesturesEnabled(true);
         btn_close_detail.hide();
+    }
+
+    private void showDetail() {
+        btn_close_detail.show();
+        btn_find_my_location.hide();
+        btn_open_filter.hide();
+        detail_view.setVisibility(View.VISIBLE);
     }
 
 

@@ -21,6 +21,12 @@
     <string name="label_seller">Vende SUBE</string>
     <string name="label_chargecost">Cobra por cargar</string>
     <string name="label_type">Tipo de Lugar</string>
+    <string name="title_filter_view">Filtrar puntos del mapa</string>
+    <string name="label_hide_points">OCULTAR PUNTOS DE CARGA</string>
+    <string name="label_option_hours">Fuera de horario de atención</string>
+    <string name="label_option_cargecost">@string/label_chargecost</string>
+    <string name="label_option_noseller">No venden SUBE</string>
+    <string name="label_option_novisiblehours">No indican horario de atención</string>
 
     <!-- View Configuración -->
     <string name="title_activity_config">@string/action_settings</string>
