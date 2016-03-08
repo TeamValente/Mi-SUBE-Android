@@ -502,6 +502,10 @@ public class MapViewFragment extends Fragment implements
         mService.setMiFiltro(mFiltro);
         mService.aplicarFiltro(items);
 
+        // limpiamos los puntos antedes de volver a llamarlos
+        map.clear();
+        markerPuntoCargaMap.clear();
+
         for (int i = 0; i < items.size(); i++) {
             markerOptions.position(new LatLng(items.get(i).getLatitude(), items.get(i).getLongitude()));
             //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place));

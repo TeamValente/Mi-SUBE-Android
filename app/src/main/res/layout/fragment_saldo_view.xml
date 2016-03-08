@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_title_card"
                 android:textColor="@color/text_color_70"
-                android:textSize="12sp"/>
+                android:textSize="13sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,16 +73,18 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight=".8"
-                    android:layout_height="wrap_content"
+                    android:layout_height="34dp"
                     android:textColor="@color/icons"
                     android:id="@+id/label_moves"
                     android:text="@string/label_movimientos"/>
 
-                <Button
+                <ImageButton
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:id="@+id/btn_open_move_list"
-                    android:background="@drawable/ic_error_outline"/>
+                    android:contentDescription="@null"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_error_outline" />
 
             </LinearLayout>
 

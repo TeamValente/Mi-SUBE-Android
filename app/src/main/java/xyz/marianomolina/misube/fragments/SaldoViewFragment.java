@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.florent37.viewanimator.ViewAnimator;
@@ -55,7 +56,7 @@ public class SaldoViewFragment extends Fragment {
                 .start();
 
 
-        Button btn_open_movimientos = (Button) getActivity().findViewById(R.id.btn_open_move_list);
+        ImageButton btn_open_movimientos = (ImageButton) getActivity().findViewById(R.id.btn_open_move_list);
         btn_open_movimientos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

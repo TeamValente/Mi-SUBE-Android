@@ -17,9 +17,10 @@
         app:fabSize="mini"
         app:backgroundTint="@color/secondary_text"
         android:id="@+id/btn_close_detail"
-        android:src="@drawable/ic_clear"
+        app:srcCompat="@drawable/ic_clear"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_alignParentRight="true"
+        android:foregroundGravity="right"
         app:layout_anchor="@id/map_container"
         app:layout_anchorGravity="top|right|end"/>
 
@@ -156,9 +157,10 @@
         app:fabSize="mini"
         app:backgroundTint="@color/secondary_text"
         android:id="@+id/btn_close_filter_view"
-        android:src="@drawable/ic_clear"
+        app:srcCompat="@drawable/ic_clear"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_alignParentRight="true"
+        android:foregroundGravity="right"
         app:layout_anchor="@id/map_container"
         app:layout_anchorGravity="top|right|end"/>
 
@@ -223,7 +225,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:id="@+id/btn_open_filter"
-        android:src="@drawable/ic_tune"
+        app:srcCompat="@drawable/ic_tune"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="88dp"
         android:layout_alignParentRight="true"

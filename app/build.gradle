@@ -16,7 +16,6 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
@@ -27,12 +26,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
-        // Enabling multidex support.
         multiDexEnabled true
-        // Enabling vector support.
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -48,10 +45,8 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
-    // Retrofit
-    // Permission
+
     apt 'com.github.hotchemi:permissionsdispatcher-processor:2.0.7'
-    // Animation
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.android.support:support-v13:23.2.0'
