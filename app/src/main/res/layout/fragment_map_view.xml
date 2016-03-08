@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+
         android:layout_alignParentBottom="true"
         android:background="@color/bg_detail"
         android:elevation="30dp"
@@ -48,12 +48,28 @@
             style="@style/LabelDetailView"
             android:text="@string/label_distance" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/label_distance_detail"
-            style="@style/LabelDetailView.Response"
-            android:text="" />
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:id="@+id/label_distance_detail"
+                style="@style/LabelDetailView.Response"
+                android:text="" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/button_route"
+                style="@style/AppCompat.Button.Flat.Common"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

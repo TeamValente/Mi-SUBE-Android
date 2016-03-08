@@ -11,8 +11,12 @@
 
     <!-- text-70 -->
     <color name="text_color_70">#B3FFFFFF</color>
-
     <color name="bg_detail">#727272</color>
+
+    <!-- Button -->
+    <color name="flat_pressed">#B3E5FC</color>
+    <color name="flat_disabled_text">#40000000</color>
+    <color name="flat_normal_text">#03A9F4</color>
 
     <!--
     Hex Opacity Values
