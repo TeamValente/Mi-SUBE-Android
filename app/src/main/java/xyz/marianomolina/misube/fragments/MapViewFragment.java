@@ -3,6 +3,7 @@ package xyz.marianomolina.misube.fragments;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -54,6 +56,8 @@ import permissions.dispatcher.RuntimePermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import xyz.marianomolina.misube.MovimientosActivity;
+import xyz.marianomolina.misube.PuntoDeCargaRouteActivity;
 import xyz.marianomolina.misube.R;
 import xyz.marianomolina.misube.helper.DetailHelper;
 import xyz.marianomolina.misube.model.Filtro;
@@ -522,6 +526,7 @@ public class MapViewFragment extends Fragment implements
                 TextView label_seller = (TextView) getActivity().findViewById(R.id.label_seller_detail);
                 TextView label_charge_cost = (TextView) getActivity().findViewById(R.id.label_charge_detail);
                 TextView label_type = (TextView) getActivity().findViewById(R.id.label_type_detail);
+                Button btn_view_route = (Button) getActivity().findViewById(R.id.btn_open_route_view);
 
                 // setLabelValues
                 label_direction.setText(detalleHelper.getDireccion());
@@ -532,6 +537,15 @@ public class MapViewFragment extends Fragment implements
                 label_type.setText(detalleHelper.getTipoPunto());
 
                 showDetail();
+
+                btn_view_route.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentMapRoute = new Intent(getContext(), PuntoDeCargaRouteActivity.class);
+                        getActivity().startActivity(intentMapRoute);
+                    }
+                });
+
                 return false;
             }
         });
