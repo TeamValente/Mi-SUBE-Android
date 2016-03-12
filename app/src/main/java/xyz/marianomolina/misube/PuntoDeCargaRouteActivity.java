@@ -1,5 +1,6 @@
 package xyz.marianomolina.misube;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +12,28 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMapReadyCallback {
-
+    // TAG
+    private static final String LOG_TAG = PuntoDeCargaRouteActivity.class.getSimpleName();
     private GoogleMap mMap;
+    private LatLng userLatLng;
+    private LatLng puntoLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_de_carga_route);
-
         initToolbar();
+
+        Bundle bundle = getIntent().getParcelableExtra("bundle");
+
+        if (bundle != null) {
+            userLatLng = bundle.getParcelable("USER_LAT_LNG") ;
+            puntoLatLng = bundle.getParcelable("PUNTO_LAT_LNG");
+            //Log.d(LOG_TAG, "User location:" + userLatLng + "puntoLocation: " + puntoLatLng);
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -32,10 +43,16 @@ public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        PolylineOptions options = new PolylineOptions();
+        options.color(Color.parseColor("#CC0000FF"));
+        options.width(5);
+        options.visible(true);
+        options.add(userLatLng, puntoLatLng);
+        options.geodesic(true);
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.addPolyline(options);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 13));
     }
 
     private void initToolbar() {

@@ -56,7 +56,6 @@ import permissions.dispatcher.RuntimePermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import xyz.marianomolina.misube.MovimientosActivity;
 import xyz.marianomolina.misube.PuntoDeCargaRouteActivity;
 import xyz.marianomolina.misube.R;
 import xyz.marianomolina.misube.helper.DetailHelper;
@@ -517,7 +516,7 @@ public class MapViewFragment extends Fragment implements
 
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public boolean onMarkerClick(final Marker marker) {
 
                 PuntoCarga puntoCarga = markerPuntoCargaMap.get(marker);
                 //Uso el Helper para llenar los campos
@@ -546,6 +545,16 @@ public class MapViewFragment extends Fragment implements
                     @Override
                     public void onClick(View v) {
                         Intent intentMapRoute = new Intent(getContext(), PuntoDeCargaRouteActivity.class);
+
+                        LatLng userLatLng = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                        LatLng puntoLatLng = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
+
+                        Bundle args = new Bundle();
+                        args.putParcelable("USER_LAT_LNG", userLatLng);
+                        args.putParcelable("PUNTO_LAT_LNG", puntoLatLng);
+
+                        intentMapRoute.putExtra("bundle", args);
+
                         getActivity().startActivity(intentMapRoute);
                     }
                 });
