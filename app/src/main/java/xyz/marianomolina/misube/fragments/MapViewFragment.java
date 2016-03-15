@@ -608,7 +608,7 @@ public class MapViewFragment extends Fragment implements
                 .translationY(857, 0)
                 .alpha(0,1)
                 .descelerate()
-                .duration(1000)
+                .duration(500)
                 .start();
     }
 
@@ -622,7 +622,7 @@ public class MapViewFragment extends Fragment implements
                 .translationY(852, 0)
                 .alpha(0,1)
                 .descelerate()
-                .duration(1000)
+                .duration(500)
                 .start();
     }
 

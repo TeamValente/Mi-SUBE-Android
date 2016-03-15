@@ -52,7 +52,7 @@ public class SaldoViewFragment extends Fragment {
                 .translationY(-1000,0)
                 .alpha(0, 1)
                 .descelerate()
-                .duration(1000)
+                .duration(500)
                 .start();
 
 

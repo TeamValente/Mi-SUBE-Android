@@ -63,4 +63,6 @@ dependencies {
     // animations
     compile 'com.github.florent37:viewanimator:1.0.3@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    // directions service
+    compile 'com.akexorcist:googledirectionlibrary:1.0.4'
 }
