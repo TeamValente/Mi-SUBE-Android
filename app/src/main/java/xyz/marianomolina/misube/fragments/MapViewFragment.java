@@ -188,14 +188,14 @@ public class MapViewFragment extends Fragment implements
                         getLocation(mLocation);
 
                         USER_LOC = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 13));
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 15   ));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
                     // Centramos el mapa en BUENOS AIRES
                     USER_LOC = new LatLng(-34.6160275, -58.4333203);
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 12));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(USER_LOC, 15));
                 }
 
                 btn_find_my_location.setOnClickListener(new View.OnClickListener() {
@@ -325,7 +325,7 @@ public class MapViewFragment extends Fragment implements
             btn_open_filter.show();
 
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 13));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
 
             mUbicacion = new MiUbicacion();
             mUbicacion.setLongitude(userLocation.longitude);
