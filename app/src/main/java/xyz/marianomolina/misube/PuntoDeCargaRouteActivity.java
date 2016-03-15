@@ -2,6 +2,7 @@ package xyz.marianomolina.misube;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -103,7 +104,7 @@ public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMa
             mMap.addMarker(new MarkerOptions().position(puntoLatLng));
 
             ArrayList<LatLng> directionPositionList = direction.getRouteList().get(0).getLegList().get(0).getDirectionPoint();
-            mMap.addPolyline(DirectionConverter.createPolyline(this, directionPositionList, 5, Color.RED));
+            mMap.addPolyline(DirectionConverter.createPolyline(this, directionPositionList, 5, ContextCompat.getColor(this, R.color.accent)));
         } else {
             Log.d(LOG_TAG, "ERROR al consultar con la API" + rawBody);
         }
