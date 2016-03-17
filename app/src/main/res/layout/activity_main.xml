@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/main_container"
     tools:context="xyz.marianomolina.misube.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -46,15 +47,47 @@
 
     </LinearLayout>
 
+    <!-- closeDetailView -->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_close_detail"
+        app:srcCompat="@drawable/ic_clear"
+        android:layout_marginTop="118dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="top|end"
+        android:foregroundGravity="right"
+        app:fabSize="mini"
+        app:backgroundTint="@color/secondary_text"
+        app:elevation="16dp" />
+
+    <!-- openFilterView -->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:id="@+id/btn_open_filter"
+        app:srcCompat="@drawable/ic_tune"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="88dp"
+        android:layout_gravity="bottom|end"
+        app:layout_anchorGravity="bottom|right|end"
+        app:fabSize="normal"
+        app:elevation="16dp"/>
+
+    <!-- btnFindMyLocation -->
     <android.support.design.widget.FloatingActionButton
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:id="@+id/btn_find_my_location"
         app:srcCompat="@drawable/ic_my_location"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_anchorGravity="bottom|right|end"
         app:fabSize="normal"
-        android:elevation="16dp"/>
+        app:elevation="16dp" />
 
 </android.support.design.widget.CoordinatorLayout>

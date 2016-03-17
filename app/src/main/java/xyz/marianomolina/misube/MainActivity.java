@@ -31,8 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Find button
         final FloatingActionButton btn_find_my_location = (FloatingActionButton) findViewById(R.id.btn_find_my_location);
+        final FloatingActionButton btn_open_filter = (FloatingActionButton) findViewById(R.id.btn_open_filter);
+        final FloatingActionButton btn_close_detail = (FloatingActionButton) findViewById(R.id.btn_close_detail);
         btn_find_my_location.hide();
-
+        btn_open_filter.hide();
+        btn_close_detail.hide();
         // config TabLayout
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.masterTab);
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_saldo));
@@ -54,9 +57,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (tab.getPosition()) {
                     case 0:
                         btn_find_my_location.hide();
+                        btn_open_filter.hide();
+                        btn_close_detail.hide();
                         break;
                     case 1:
                         btn_find_my_location.show();
+                        btn_open_filter.show();
+                        btn_close_detail.hide();
                         break;
                 }
                 mViewPager.setCurrentItem(tab.getPosition());

@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/map_container">
 
     <fragment
@@ -10,20 +9,6 @@
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
-    <!-- closeDetailView -->
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:fabSize="mini"
-        app:backgroundTint="@color/secondary_text"
-        android:id="@+id/btn_close_detail"
-        app:srcCompat="@drawable/ic_clear"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_alignParentRight="true"
-        android:foregroundGravity="right"
-        app:layout_anchor="@id/map_container"
-        app:layout_anchorGravity="top|right|end"/>
-
     <!-- DetailView -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +16,6 @@
         android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:background="@color/bg_detail"
-        android:elevation="30dp"
         android:id="@+id/detail_view"
         android:padding="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
@@ -150,27 +134,12 @@
 
     </LinearLayout>
 
-    <!-- closeDetailView -->
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:fabSize="mini"
-        app:backgroundTint="@color/secondary_text"
-        android:id="@+id/btn_close_filter_view"
-        app:srcCompat="@drawable/ic_clear"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_alignParentRight="true"
-        android:foregroundGravity="right"
-        app:layout_anchor="@id/map_container"
-        app:layout_anchorGravity="top|right|end"/>
-
     <!-- FilterView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/bg_detail"
-        android:elevation="30dp"
         android:visibility="gone"
         android:id="@+id/filter_view"
         android:padding="@dimen/activity_horizontal_margin"
@@ -219,20 +188,6 @@
             android:id="@+id/switch_option_novisiblehours" />
 
     </LinearLayout>
-
-    <!-- openFilterView -->
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:id="@+id/btn_open_filter"
-        app:srcCompat="@drawable/ic_tune"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="88dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        app:layout_anchorGravity="bottom|right|end"
-        app:fabSize="normal"
-        android:elevation="16dp"/>
 
 </RelativeLayout>
 

@@ -86,7 +86,6 @@ public class MapViewFragment extends Fragment implements
     private SupportMapFragment supportMapFragment;
     private FloatingActionButton btn_find_my_location;
     private FloatingActionButton btn_close_detail;
-    private FloatingActionButton btn_close_filter;
     private FloatingActionButton btn_open_filter;
     private LinearLayout detail_view;
     private LinearLayout filter_view;
@@ -139,9 +138,6 @@ public class MapViewFragment extends Fragment implements
 
             btn_close_detail = (FloatingActionButton) getActivity().findViewById(R.id.btn_close_detail);
             btn_close_detail.hide();
-
-            btn_close_filter = (FloatingActionButton) getActivity().findViewById(R.id.btn_close_filter_view);
-            btn_close_filter.hide();
 
             detail_view = (LinearLayout) getActivity().findViewById(R.id.detail_view);
             filter_view = (LinearLayout) getActivity().findViewById(R.id.filter_view);
@@ -507,7 +503,6 @@ public class MapViewFragment extends Fragment implements
 
         for (int i = 0; i < items.size(); i++) {
             markerOptions.position(new LatLng(items.get(i).getLatitude(), items.get(i).getLongitude()));
-            //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place));
             // Agregamos los marker al mapa.
             mMarker = map.addMarker(markerOptions);
             // Guardamos los datos del marker en un hashMap
@@ -578,16 +573,14 @@ public class MapViewFragment extends Fragment implements
         btn_close_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideDetail();
+                if (detail_view.getVisibility() == View.VISIBLE) {
+                    hideDetail();
+                } else if (filter_view.getVisibility() == View.VISIBLE) {
+                    hideFilterView();
+                }
             }
         });
 
-        btn_close_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideFilterView();
-            }
-        });
     }
 
     private void hideDetail() {
@@ -614,7 +607,7 @@ public class MapViewFragment extends Fragment implements
 
     private void showFilterView() {
         map.getUiSettings().setScrollGesturesEnabled(false);
-        btn_close_filter.show();
+        btn_close_detail.show();
         btn_open_filter.hide();
         btn_find_my_location.hide();
         filter_view.setVisibility(View.VISIBLE);
@@ -627,11 +620,11 @@ public class MapViewFragment extends Fragment implements
     }
 
     private void hideFilterView() {
-        btn_close_filter.hide();
+        filter_view.setVisibility(View.INVISIBLE);
         btn_find_my_location.show();
         btn_open_filter.show();
-        filter_view.setVisibility(View.INVISIBLE);
         map.getUiSettings().setScrollGesturesEnabled(true);
+        btn_close_detail.hide();
     }
 
 }
