@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
+import com.akexorcist.googledirection.model.Line;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
@@ -33,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         final FloatingActionButton btn_find_my_location = (FloatingActionButton) findViewById(R.id.btn_find_my_location);
         final FloatingActionButton btn_open_filter = (FloatingActionButton) findViewById(R.id.btn_open_filter);
         final FloatingActionButton btn_close_detail = (FloatingActionButton) findViewById(R.id.btn_close_detail);
+        // Find detailsViews
+        LinearLayout detail_view = (LinearLayout) findViewById(R.id.detail_view);
+        LinearLayout filter_view = (LinearLayout) findViewById(R.id.filter_view);
+        detail_view.setVisibility(View.INVISIBLE);
+        filter_view.setVisibility(View.INVISIBLE);
+
         btn_find_my_location.hide();
         btn_open_filter.hide();
         btn_close_detail.hide();

@@ -318,7 +318,7 @@ public class MapViewFragment extends Fragment implements
         if (location != null) {
             Log.d(LOG_TAG, "El GPS esta encendido");
 
-            btn_open_filter.show();
+            //btn_open_filter.show();
 
             LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
