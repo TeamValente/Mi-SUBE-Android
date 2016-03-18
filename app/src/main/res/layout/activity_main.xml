@@ -46,185 +46,194 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-    <!-- DetailView -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_gravity="bottom|end"
-        android:background="@color/bg_detail"
-        android:id="@+id/detail_view"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:id="@+id/pannel_container"
+        android:paddingTop="16dp"
+        android:layout_gravity="bottom|end">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/label_direction_detail"
-            style="@style/LabelDetailView.Response.Big"
-            android:text="" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/LabelDetailView"
-            android:text="@string/label_distance" />
-
+        <!-- DetailView -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:visibility="gone"
+            android:layout_gravity="bottom|end"
+            android:background="@color/bg_detail"
+            android:id="@+id/detail_view"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/label_distance_detail"
-                style="@style/LabelDetailView.Response"
+                android:id="@+id/label_direction_detail"
+                style="@style/LabelDetailView.Response.Big"
                 android:text="" />
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/btn_open_route_view"
-                android:text="@string/button_route"
-                style="@style/AppCompat.Button.Flat.Common"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/LabelDetailView"
-            android:text="@string/label_hours" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/label_hours_detail"
-            style="@style/LabelDetailView.Response"
-            android:text="" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_top_set"
-            android:paddingTop="8dp"
-            android:orientation="horizontal">
-
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 style="@style/LabelDetailView"
-                android:text="@string/label_seller" />
+                android:text="@string/label_distance" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/label_distance_detail"
+                    style="@style/LabelDetailView.Response"
+                    android:text="" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/btn_open_route_view"
+                    android:text="@string/button_route"
+                    style="@style/AppCompat.Button.Flat.Common"/>
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
                 style="@style/LabelDetailView"
-                android:text="@string/label_chargecost" />
+                android:text="@string/label_hours" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/label_hours_detail"
+                style="@style/LabelDetailView.Response"
+                android:text="" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_top_set"
+                android:paddingTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    style="@style/LabelDetailView"
+                    android:text="@string/label_seller" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    style="@style/LabelDetailView"
+                    android:text="@string/label_chargecost" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/border_bottom_set"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/label_seller_detail"
+                    style="@style/LabelDetailView.Response"
+                    android:text="" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:id="@+id/label_charge_detail"
+                    style="@style/LabelDetailView.Response"
+                    android:text="" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LabelDetailView"
+                android:text="@string/label_type" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/label_type_detail"
+                style="@style/LabelDetailView.Response"
+                android:text="" />
 
         </LinearLayout>
 
+        <!-- FilterView -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/border_bottom_set"
-            android:orientation="horizontal">
+            android:background="@color/bg_detail"
+            android:visibility="gone"
+            android:layout_gravity="bottom|end"
+            android:id="@+id/filter_view"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/label_seller_detail"
-                style="@style/LabelDetailView.Response"
-                android:text="" />
+                android:text="@string/title_filter_view"
+                style="@style/LabelDetailView.Title"
+                android:layout_marginBottom="16dp"
+                android:gravity="center" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:id="@+id/label_charge_detail"
-                style="@style/LabelDetailView.Response"
-                android:text="" />
+                android:text="@string/label_hide_points"
+                style="@style/LabelDetailView.SubTitle"/>
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_option_hours"
+                style="@style/LabelDetailView.Switch"
+                android:id="@+id/switch_option_hours" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_option_cargecost"
+                style="@style/LabelDetailView.Switch"
+                android:id="@+id/switch_option_chargecost" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_option_noseller"
+                style="@style/LabelDetailView.Switch"
+                android:id="@+id/switch_option_noseller" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_option_novisiblehours"
+                style="@style/LabelDetailView.Switch"
+                android:id="@+id/switch_option_novisiblehours" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/LabelDetailView"
-            android:text="@string/label_type" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/label_type_detail"
-            style="@style/LabelDetailView.Response"
-            android:text="" />
-
-    </LinearLayout>
-
-    <!-- FilterView -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_detail"
-        android:visibility="gone"
-        android:layout_gravity="bottom|end"
-        android:id="@+id/filter_view"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title_filter_view"
-            style="@style/LabelDetailView.Title"
-            android:layout_marginBottom="16dp"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_hide_points"
-            style="@style/LabelDetailView.SubTitle"/>
-
-        <Switch
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_option_hours"
-            style="@style/LabelDetailView.Switch"
-            android:id="@+id/switch_option_hours" />
-
-        <Switch
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_option_cargecost"
-            style="@style/LabelDetailView.Switch"
-            android:id="@+id/switch_option_chargecost" />
-
-        <Switch
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_option_noseller"
-            style="@style/LabelDetailView.Switch"
-            android:id="@+id/switch_option_noseller" />
-
-        <Switch
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_option_novisiblehours"
-            style="@style/LabelDetailView.Switch"
-            android:id="@+id/switch_option_novisiblehours" />
-
-    </LinearLayout>
+    </FrameLayout>
 
     <!-- closeDetailView -->
     <android.support.design.widget.FloatingActionButton
@@ -232,13 +241,12 @@
         android:layout_height="40dp"
         android:id="@+id/btn_close_detail"
         app:srcCompat="@drawable/ic_clear"
-        android:layout_marginTop="118dp"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_gravity="top|end"
         android:foregroundGravity="right"
+        app:layout_anchor="@id/pannel_container"
+        app:layout_anchorGravity="top|right|end"
         app:fabSize="mini"
         app:backgroundTint="@color/secondary_text"
         app:elevation="16dp" />
