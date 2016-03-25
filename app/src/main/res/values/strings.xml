@@ -31,6 +31,12 @@
 
     <!-- View Configuración -->
     <string name="title_activity_config">@string/action_settings</string>
+    <string name="title_settings_card">Ajustes de tarjeta</string>
+    <string name="label_remove_card">Borrar Tarjeta</string>
+    <string name="title_about_us">Acerca de</string>
+    <string name="btn_libs_oss">Librerias utilizadas</string>
+    <string name="btn_review">Calificanos</string>
+    <string name="label_app_version">Versión</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

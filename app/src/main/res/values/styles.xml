@@ -61,4 +61,26 @@
         <item name="android:layout_marginRight">@dimen/btn_flat_margin</item>
     </style>
 
+    <!-- Config -->
+    <style name="titleConfigView" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="textConfig" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SwitchConfig" parent="LabelDetailView">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppCompat.Button.Flat.Common.Config" parent="AppCompat.Button.Flat.Common">
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
 </resources>
