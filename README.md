@@ -1,7 +1,7 @@
 # Mi-SUBE-Android
 Versión Android de la aplicación Mi SUBE
 
-![Mi SUBE App Icon](MiSUBE@GooglePlay.png)
+![Mi SUBE App Icon](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
 Aplicación Android para saber donde cargar la tarjeta SUBE y controlar tus gastos.
 
