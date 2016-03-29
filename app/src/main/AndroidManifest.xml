@@ -63,6 +63,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="xyz.marianomolina.misube.MainActivity" />
         </activity>
+
+        <activity android:name=".WebViewActivity"
+            android:label="@string/title_about_us"
+            android:parentActivityName=".ConfigActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="xyz.marianomolina.misube.ConfigActivity" />
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -80,6 +90,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="73eb2c1373ea4e2a2e9c1037e73cb28e0e3014ad" />
+
 
     </application>
 

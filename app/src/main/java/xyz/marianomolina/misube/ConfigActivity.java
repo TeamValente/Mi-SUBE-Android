@@ -1,6 +1,7 @@
 package xyz.marianomolina.misube;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 public class ConfigActivity extends AppCompatActivity {
     // LOG_TAG
     private static final String LOG_TAG = ConfigActivity.class.getSimpleName();
+    private Intent mIntent;
+    private String EXTRA_WEBVIEW_URL;
+    private String EXTRA_WEBVIEW_TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +28,23 @@ public class ConfigActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // setWebView Intent
+        mIntent = new Intent(ConfigActivity.this, WebViewActivity.class);
+
         // setVersion
         TextView view_version = (TextView) findViewById(R.id.label_app_version);
         assert view_version != null;
         view_version.setText(setVersionNumber());
-
+        view_version.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EXTRA_WEBVIEW_URL = "http://misube.com/app/changelog-android.html";
+                EXTRA_WEBVIEW_TAG = "changelog";
+                mIntent.putExtra("EXTRA_WEBVIEW_URL", EXTRA_WEBVIEW_URL);
+                mIntent.putExtra("EXTRA_WEBVIEW_TAG", EXTRA_WEBVIEW_TAG);
+                startActivity(mIntent);
+            }
+        });
 
         Switch switch_remove_card = (Switch) findViewById(R.id.switch_remove_card);
         assert switch_remove_card != null;
@@ -44,7 +60,11 @@ public class ConfigActivity extends AppCompatActivity {
         btn_about_us.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_TAG, "BTN About us");
+                EXTRA_WEBVIEW_URL = "http://misube.com/app/about.html";
+                EXTRA_WEBVIEW_TAG = "about";
+                mIntent.putExtra("EXTRA_WEBVIEW_URL", EXTRA_WEBVIEW_URL);
+                mIntent.putExtra("EXTRA_WEBVIEW_TAG", EXTRA_WEBVIEW_TAG);
+                startActivity(mIntent);
             }
         });
 
@@ -53,7 +73,11 @@ public class ConfigActivity extends AppCompatActivity {
         btn_oss_libs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_TAG, "BTN oss libs");
+                EXTRA_WEBVIEW_URL = "http://misube.com/app/libs-android.html";
+                EXTRA_WEBVIEW_TAG = "oss";
+                mIntent.putExtra("EXTRA_WEBVIEW_URL", EXTRA_WEBVIEW_URL);
+                mIntent.putExtra("EXTRA_WEBVIEW_TAG", EXTRA_WEBVIEW_TAG);
+                startActivity(mIntent);
             }
         });
 
