@@ -55,7 +55,7 @@ public class ConfigActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_about_us = (Button) findViewById(R.id.btn_about_us);
+        TextView btn_about_us = (TextView) findViewById(R.id.btn_about_us);
         assert btn_about_us != null;
         btn_about_us.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +68,7 @@ public class ConfigActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_oss_libs = (Button) findViewById(R.id.btn_oss_libs);
+        TextView btn_oss_libs = (TextView) findViewById(R.id.btn_oss_libs);
         assert btn_oss_libs != null;
         btn_oss_libs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class ConfigActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_review = (Button) findViewById(R.id.btn_review);
+        TextView btn_review = (TextView) findViewById(R.id.btn_review);
         assert btn_review != null;
         btn_review.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,6 @@ public class ConfigActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "BTN review");
             }
         });
-
     }
 
     /**
