@@ -24,9 +24,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMapReadyCallback, DirectionCallback {
-    // TAG
     private static final String LOG_TAG = PuntoDeCargaRouteActivity.class.getSimpleName();
+    // Bind Views
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    // GMaps outlets
     private GoogleMap mMap;
     private LatLng userLatLng;
     private LatLng puntoLatLng;
@@ -35,6 +40,9 @@ public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_de_carga_route);
+
+        ButterKnife.bind(this);
+
         initToolbar();
 
         Bundle bundle = getIntent().getParcelableExtra("bundle");
@@ -52,7 +60,6 @@ public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMa
     }
 
     private void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -62,7 +69,6 @@ public class PuntoDeCargaRouteActivity extends AppCompatActivity implements OnMa
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        assert toolbar != null;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

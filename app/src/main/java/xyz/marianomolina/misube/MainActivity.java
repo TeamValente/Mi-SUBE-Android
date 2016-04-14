@@ -12,9 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.akexorcist.googledirection.model.Line;
 import com.crashlytics.android.Crashlytics;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 import xyz.marianomolina.misube.adapters.TabPageAdapter;
 
@@ -23,38 +24,42 @@ import xyz.marianomolina.misube.adapters.TabPageAdapter;
  * Twitter: @xsincrueldadx
  */
 public class MainActivity extends AppCompatActivity {
+    // Bind Views
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.btn_find_my_location) FloatingActionButton btn_find_my_location;
+    @Bind(R.id.btn_open_filter) FloatingActionButton btn_open_filter;
+    @Bind(R.id.btn_close_detail) FloatingActionButton btn_close_detail;
+    @Bind(R.id.detail_view) LinearLayout detail_view;
+    @Bind(R.id.filter_view) LinearLayout filter_view;
+    @Bind(R.id.masterTab) TabLayout mTabLayout;
+    @Bind(R.id.masterViewPager) ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        // Find button
-        final FloatingActionButton btn_find_my_location = (FloatingActionButton) findViewById(R.id.btn_find_my_location);
-        final FloatingActionButton btn_open_filter = (FloatingActionButton) findViewById(R.id.btn_open_filter);
-        final FloatingActionButton btn_close_detail = (FloatingActionButton) findViewById(R.id.btn_close_detail);
-        // Find detailsViews
-        LinearLayout detail_view = (LinearLayout) findViewById(R.id.detail_view);
-        LinearLayout filter_view = (LinearLayout) findViewById(R.id.filter_view);
         detail_view.setVisibility(View.INVISIBLE);
         filter_view.setVisibility(View.INVISIBLE);
 
         btn_find_my_location.hide();
         btn_open_filter.hide();
         btn_close_detail.hide();
+
         // config TabLayout
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.masterTab);
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_saldo));
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_mapa));
+
         // tabs sin label
         //mTabLayout.addTab(mTabLayout.newTab());
         //mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager mViewPager = (ViewPager) findViewById(R.id.masterViewPager);
         // set adapter to viewPager
         final TabPageAdapter mTabPageAdapter = new TabPageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mViewPager.setAdapter(mTabPageAdapter);

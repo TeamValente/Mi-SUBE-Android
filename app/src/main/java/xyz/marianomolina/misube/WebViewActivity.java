@@ -7,12 +7,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class WebViewActivity extends AppCompatActivity {
+    // Bind Views
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.webViewsComponent) WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+
+        ButterKnife.bind(this);
 
         // obtenemos el id desde el otro activity
         Bundle extras = getIntent().getExtras();
@@ -26,14 +34,11 @@ public class WebViewActivity extends AppCompatActivity {
 
         initToolbar(EXTRA_WEBVIEW_TAG);
 
-
-        WebView mWebView = (WebView) findViewById(R.id.webViewsComponent);
-        assert mWebView != null;
         mWebView.loadUrl(EXTRA_WEBVIEW_URL);
     }
 
     private void initToolbar(String titleTag) {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -55,7 +60,6 @@ public class WebViewActivity extends AppCompatActivity {
             }
         }
 
-        assert toolbar != null;
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

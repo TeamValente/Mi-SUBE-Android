@@ -1,6 +1,5 @@
 package xyz.marianomolina.misube.fragments;
 
-
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,6 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -81,21 +82,9 @@ public class MapViewFragment extends Fragment implements
     // Permission Constants
     private static final int REQUEST_SHOWMAP = 0;
     private static final String[] PERMISSION_SHOWMAP = new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"};
-    // view outlets
+    // GMaps outlets
     private GoogleMap map;
     private SupportMapFragment supportMapFragment;
-    private FloatingActionButton btn_find_my_location;
-    private FloatingActionButton btn_close_detail;
-    private FloatingActionButton btn_open_filter;
-    private LinearLayout detail_view;
-    private LinearLayout filter_view;
-    private Switch option_hours;
-    private Switch option_chargecost;
-    private Switch option_noseller;
-    private Switch option_novisiblehours;
-
-    // location
-    private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
     private Location mLocation;
     private LatLng USER_LOC;
@@ -104,6 +93,23 @@ public class MapViewFragment extends Fragment implements
     private MiUbicacion mUbicacion;
     private Filtro mFiltro;
     private Map<Marker, PuntoCarga> markerPuntoCargaMap = new HashMap<>();
+    // Bind Views
+    @Bind(R.id.btn_find_my_location) FloatingActionButton btn_find_my_location;
+    @Bind(R.id.btn_open_filter) FloatingActionButton btn_open_filter;
+    @Bind(R.id.btn_close_detail) FloatingActionButton btn_close_detail;
+    @Bind(R.id.detail_view) LinearLayout detail_view;
+    @Bind(R.id.filter_view) LinearLayout filter_view;
+    @Bind(R.id.label_direction_detail) TextView label_direction;
+    @Bind(R.id.label_distance_detail) TextView label_distance;
+    @Bind(R.id.label_hours_detail) TextView label_hours;
+    @Bind(R.id.label_seller_detail) TextView label_seller;
+    @Bind(R.id.label_charge_detail) TextView label_charge_cost;
+    @Bind(R.id.label_type_detail) TextView label_type;
+    @Bind(R.id.btn_open_route_view) Button btn_view_route;
+    @Bind(R.id.switch_option_hours) Switch option_hours;
+    @Bind(R.id.switch_option_chargecost) Switch option_chargecost;
+    @Bind(R.id.switch_option_noseller) Switch option_noseller;
+    @Bind(R.id.switch_option_novisiblehours) Switch option_novisiblehours;
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -111,7 +117,9 @@ public class MapViewFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_map_view, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -132,21 +140,8 @@ public class MapViewFragment extends Fragment implements
             supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
 
             // find elements
-            btn_find_my_location = (FloatingActionButton) getActivity().findViewById(R.id.btn_find_my_location);
-            btn_open_filter = (FloatingActionButton) getActivity().findViewById(R.id.btn_open_filter);
             btn_open_filter.hide();
-
-            btn_close_detail = (FloatingActionButton) getActivity().findViewById(R.id.btn_close_detail);
             btn_close_detail.hide();
-
-            detail_view = (LinearLayout) getActivity().findViewById(R.id.detail_view);
-            filter_view = (LinearLayout) getActivity().findViewById(R.id.filter_view);
-
-            // filterSwitch
-            option_hours = (Switch) getActivity().findViewById(R.id.switch_option_hours);
-            option_chargecost = (Switch) getActivity().findViewById(R.id.switch_option_chargecost);
-            option_noseller = (Switch) getActivity().findViewById(R.id.switch_option_noseller);
-            option_novisiblehours = (Switch) getActivity().findViewById(R.id.switch_option_novisiblehours);
 
             //Aplico Filtros antes de dibujar
             mFiltro = new Filtro(false,false,false,false);
@@ -363,7 +358,7 @@ public class MapViewFragment extends Fragment implements
     }
 
     protected void startLocationUpdate() {
-        locationRequest = LocationRequest.create();
+        LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         locationRequest.setInterval(10000);
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
@@ -516,16 +511,6 @@ public class MapViewFragment extends Fragment implements
                 PuntoCarga puntoCarga = markerPuntoCargaMap.get(marker);
                 //Uso el Helper para llenar los campos
                 DetailHelper detalleHelper = new DetailHelper(puntoCarga);
-
-                // findDetail Elements
-                TextView label_direction = (TextView) getActivity().findViewById(R.id.label_direction_detail);
-                TextView label_distance = (TextView) getActivity().findViewById(R.id.label_distance_detail);
-                TextView label_hours = (TextView) getActivity().findViewById(R.id.label_hours_detail);
-                TextView label_seller = (TextView) getActivity().findViewById(R.id.label_seller_detail);
-                TextView label_charge_cost = (TextView) getActivity().findViewById(R.id.label_charge_detail);
-                TextView label_type = (TextView) getActivity().findViewById(R.id.label_type_detail);
-                Button btn_view_route = (Button) getActivity().findViewById(R.id.btn_open_route_view);
-
                 // setLabelValues
                 label_direction.setText(detalleHelper.getDireccion());
                 label_distance.setText(detalleHelper.getDistancia(mUbicacion));

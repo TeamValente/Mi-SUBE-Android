@@ -8,12 +8,13 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.florent37.viewanimator.ViewAnimator;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import xyz.marianomolina.misube.MovimientosActivity;
 import xyz.marianomolina.misube.R;
 
@@ -23,13 +24,12 @@ import xyz.marianomolina.misube.R;
  * Twitter: @xsincrueldadx
  */
 public class SaldoViewFragment extends Fragment {
-    // TAG
     private static final String LOG_TAG = SaldoViewFragment.class.getSimpleName();
-
-    // viewOulets
-    private TextView view_saldo;
-    private TextView view_movimientos;
-
+    // Bind Views
+    @Nullable @Bind(R.id.view_saldo) TextView view_saldo;
+    @Nullable @Bind(R.id.label_moves) TextView view_movimientos;
+    @Bind(R.id.carview) CardView mCardview;
+    @Bind(R.id.btn_open_move_list) ImageButton btn_open_movimientos;
 
     public SaldoViewFragment() {
         // Required empty public constructor
@@ -37,17 +37,15 @@ public class SaldoViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_saldo_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_saldo_view, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        view_saldo = (TextView) getActivity().findViewById(R.id.view_saldo);
-        view_movimientos = (TextView) getActivity().findViewById(R.id.label_moves);
-
-        CardView mCardview = (CardView) getActivity().findViewById(R.id.carview);
         ViewAnimator.animate(mCardview)
                 .translationY(-1000,0)
                 .alpha(0, 1)
@@ -55,8 +53,6 @@ public class SaldoViewFragment extends Fragment {
                 .duration(500)
                 .start();
 
-
-        ImageButton btn_open_movimientos = (ImageButton) getActivity().findViewById(R.id.btn_open_move_list);
         btn_open_movimientos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
