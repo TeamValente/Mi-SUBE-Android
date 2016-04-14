@@ -102,6 +102,12 @@ public class ConfigActivityFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
     /**
      * Set appVersionNumber.
      */
