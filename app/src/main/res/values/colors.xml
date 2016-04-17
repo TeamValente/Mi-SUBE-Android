@@ -18,6 +18,13 @@
     <color name="flat_disabled_text">#40000000</color>
     <color name="flat_normal_text">#03A9F4</color>
 
+    <!-- Button -->
+    <color name="btn_add_trip_normal">#F44336</color>
+    <color name="btn_add_trip_pressed">#CCF44336</color>
+
+    <color name="btn_add_credit_normal">#00E676</color>
+    <color name="btn_add_credit_pressed">#CC00E676</color>
+
     <!--
     Hex Opacity Values
     100% — FF
