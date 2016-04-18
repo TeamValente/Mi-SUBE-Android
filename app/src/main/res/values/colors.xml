@@ -20,10 +20,10 @@
 
     <!-- Button -->
     <color name="btn_add_trip_normal">#F44336</color>
-    <color name="btn_add_trip_pressed">#CCF44336</color>
+    <color name="btn_add_trip_pressed">#D32F2F</color>
 
-    <color name="btn_add_credit_normal">#00E676</color>
-    <color name="btn_add_credit_pressed">#CC00E676</color>
+    <color name="btn_add_credit_normal">#4CAF50</color>
+    <color name="btn_add_credit_pressed">#388E3C</color>
 
     <!--
     Hex Opacity Values

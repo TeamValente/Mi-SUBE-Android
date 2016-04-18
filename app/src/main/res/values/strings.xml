@@ -11,6 +11,8 @@
     <string name="label_pesos">$</string>
     <string name="initial_value">0,0</string>
     <string name="label_movimientos">No hay movimientos registrados.</string>
+    <string name="btn_add_trip">Registrar un viaje</string>
+    <string name="btn_add_credit">Registrar una carga</string>
 
     <!-- View Movimientos -->
     <string name="title_activity_movimientos">Movimientos</string>

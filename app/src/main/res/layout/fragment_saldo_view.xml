@@ -106,16 +106,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            style="@style/AppCompat.TripButton"
-            android:text="Registrar un viaje"/>
+            style="@style/TripButton"
+            android:text="@string/btn_add_trip"/>
 
         <Button
             android:id="@+id/btnAddCredit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".5"
-            style="@style/AppCompat.CreditButton"
-            android:text="Registrar una carga"/>
+            style="@style/CreditButton"
+            android:text="@string/btn_add_credit"/>
 
     </LinearLayout>
 

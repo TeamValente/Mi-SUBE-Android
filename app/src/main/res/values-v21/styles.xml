@@ -7,8 +7,33 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-
     <style name="LabelDetailView.Response" parent="LabelDetailView">
         <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="TripButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/btn_colored_trip_selector</item>
+        <item name="android:minWidth">@dimen/btn_flat_min_width</item>
+        <item name="android:minHeight">@dimen/btn_flat_min_height</item>
+        <item name="android:textColor">@color/icons</item>
+        <item name="android:paddingLeft">@dimen/btn_flat_padding</item>
+        <item name="android:paddingRight">@dimen/btn_flat_padding</item>
+        <item name="android:layout_marginLeft">@dimen/btn_flat_margin</item>
+        <item name="android:layout_marginRight">@dimen/btn_flat_margin</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:translationZ">1dp</item>
+    </style>
+
+    <style name="CreditButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/btn_colored_credit_selector</item>
+        <item name="android:minWidth">@dimen/btn_flat_min_width</item>
+        <item name="android:minHeight">@dimen/btn_flat_min_height</item>
+        <item name="android:textColor">@color/icons</item>
+        <item name="android:paddingLeft">@dimen/btn_flat_padding</item>
+        <item name="android:paddingRight">@dimen/btn_flat_padding</item>
+        <item name="android:layout_marginLeft">@dimen/btn_flat_margin</item>
+        <item name="android:layout_marginRight">@dimen/btn_flat_margin</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:translationZ">1dp</item>
     </style>
 </resources>

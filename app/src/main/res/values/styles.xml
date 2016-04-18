@@ -63,8 +63,8 @@
     </style>
 
     <!-- TripButton -->
-    <style name="AppCompat.TripButton" parent="Base.TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/btn_trip_selector</item>
+    <style name="TripButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/btn_colored_trip_selector</item>
         <item name="android:minWidth">@dimen/btn_flat_min_width</item>
         <item name="android:minHeight">@dimen/btn_flat_min_height</item>
         <item name="android:textColor">@color/icons</item>
@@ -75,8 +75,8 @@
     </style>
 
     <!-- CreditButton -->
-    <style name="AppCompat.CreditButton" parent="Base.TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/btn_credit_selector</item>
+    <style name="CreditButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/btn_colored_credit_selector</item>
         <item name="android:minWidth">@dimen/btn_flat_min_width</item>
         <item name="android:minHeight">@dimen/btn_flat_min_height</item>
         <item name="android:textColor">@color/icons</item>
