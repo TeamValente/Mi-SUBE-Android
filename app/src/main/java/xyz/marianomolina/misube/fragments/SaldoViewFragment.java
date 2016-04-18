@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ public class SaldoViewFragment extends Fragment {
     @Nullable @Bind(R.id.label_moves) TextView view_movimientos;
     @Bind(R.id.carview) CardView mCardview;
     @Bind(R.id.btn_open_move_list) ImageButton btn_open_movimientos;
+    @Bind(R.id.btnAddTrip) Button btn_add_trip;
+    @Bind(R.id.btnAddCredit) Button btn_add_credit;
 
     public SaldoViewFragment() {
         // Required empty public constructor
