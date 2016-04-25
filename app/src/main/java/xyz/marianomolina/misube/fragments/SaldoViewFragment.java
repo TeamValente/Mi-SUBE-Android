@@ -1,5 +1,6 @@
 package xyz.marianomolina.misube.fragments;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -63,6 +64,15 @@ public class SaldoViewFragment extends Fragment {
                 getActivity().startActivity(intentMovimientos);
             }
         });
+
+
+        btn_add_trip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
+
     }
 
     @Override
@@ -70,4 +80,10 @@ public class SaldoViewFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    public void showDialog() {
+        DialogFragment dialogFragment = new DialogFragment();
+        dialogFragment.show(getActivity().getFragmentManager(), "Registrar un viaje");
+    }
+
 }

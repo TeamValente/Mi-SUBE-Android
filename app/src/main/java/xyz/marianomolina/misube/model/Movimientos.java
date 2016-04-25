@@ -24,7 +24,7 @@ public class Movimientos extends RealmObject {
         return valorMovimiento;
     }
 
-    public void setValorMovimiento(double valorMovimiento) {
+    public void setValorMovimiento(Double valorMovimiento) {
         this.valorMovimiento = valorMovimiento;
     }
 }

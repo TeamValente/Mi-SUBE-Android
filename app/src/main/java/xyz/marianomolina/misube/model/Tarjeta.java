@@ -32,7 +32,7 @@ public class Tarjeta extends RealmObject {
         return movimientos;
     }
 
-    public void setMovimientos(RealmList<Movimientos> movimientos) {
-        this.movimientos = movimientos;
+    public void setMovimientos(Movimientos nuevoMovimiento) {
+        this.movimientos.add(nuevoMovimiento);
     }
 }

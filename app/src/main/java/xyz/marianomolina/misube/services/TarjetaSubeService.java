@@ -1,11 +1,14 @@
 package xyz.marianomolina.misube.services;
 
 import android.content.Context;
+import android.util.Log;
+
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import xyz.marianomolina.misube.model.Movimientos;
 import xyz.marianomolina.misube.model.Tarjeta;
 
@@ -14,10 +17,10 @@ import xyz.marianomolina.misube.model.Tarjeta;
  * Twitter: @xsincrueldadx
  */
 public class TarjetaSubeService {
+    private static final String LOG_TAG = TarjetaSubeService.class.getSimpleName();
+
     private Tarjeta mTarjeta;
-    private Movimientos mMovimientos;
     private Realm realm;
-    private RealmList<Movimientos> movimientosRealmList;
 
     public TarjetaSubeService(Context context) {
         // setRealmConfig
@@ -73,7 +76,9 @@ public class TarjetaSubeService {
     */
 
     public RealmResults<Movimientos> listadoDeMovimientos() {
-        return realm.where(Movimientos.class).findAllSorted("fechaMovimiento");
+        RealmResults<Movimientos> listado = realm.where(Movimientos.class).findAll();
+        listado.sort("fechaMovimiento", Sort.DESCENDING);
+        return listado;
     }
 
     /** Swift version
@@ -93,12 +98,12 @@ public class TarjetaSubeService {
         Double nuevoSaldo = mTarjeta.getSaldo() + nuevoMovimiento.getValorMovimiento();
 
         realm.beginTransaction();
-        //Movimientos mMovimiento = realm.createObject(Movimientos.class);
+
+        Movimientos mMovimiento = realm.createObject(Movimientos.class);
+        mMovimiento.setValorMovimiento(nuevoMovimiento.getValorMovimiento());
 
         mTarjeta.setSaldo(nuevoSaldo);
-        //mTarjeta.setMovimientos();
         realm.commitTransaction();
-
     }
 
     /** Swift version
@@ -121,5 +126,21 @@ public class TarjetaSubeService {
         return retorno
     }
     */
+
+    public String getUltimoMovimiento() {
+        String result = "";
+
+        if (mTarjeta.getMovimientos().size() > 0) {
+            RealmResults<Movimientos> ultimoMov = realm.where(Movimientos.class).findAllSorted("timestamp", Sort.DESCENDING);
+
+            Date fechaUltimoMovimiento = ultimoMov.get(0).getFechaMovimiento();
+
+            Log.d(LOG_TAG, "getUltimoMovimiento: " + fechaUltimoMovimiento.toString());
+
+            result = fechaUltimoMovimiento.toString();
+        }
+
+        return result;
+    }
 
 }
